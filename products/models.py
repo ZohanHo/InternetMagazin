@@ -36,7 +36,7 @@ class Product(models.Model):
 
 
 class ProductImages(models.Model):
-    image_product = models.ImageField(upload_to="images/")
+    image_product = models.ImageField(upload_to="")
     product_image = models.ForeignKey(Product, related_name="images", on_delete=models.CASCADE, blank=True)
     date = models.DateTimeField(auto_now_add=True, auto_now=False)
     update = models.DateTimeField(auto_now=True, auto_now_add=False)
