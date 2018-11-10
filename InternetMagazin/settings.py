@@ -130,7 +130,7 @@ STATICFILES_DIRS = [
 ]
 
 # корень нашей статики, куда будут складыватся вся наша статика после команды (collectstatic) собраная с STATICFILES_DIRS и STATIC_URL для production сайта
-STATIC_ROOT = os.path.join(BASE_DIR, "statics")
+STATIC_ROOT = os.path.join(BASE_DIR, "static_diploy")
 
 STATIC_URL = '/static/' # статические файлы отдельных апликейшенов, css, js, шрифтц, потом ещет тут
 
