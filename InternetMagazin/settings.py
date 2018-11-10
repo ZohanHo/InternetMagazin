@@ -134,6 +134,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static_diploy")
 
 STATIC_URL = '/static/' # статические файлы отдельных апликейшенов, css, js, шрифтц, потом ещет тут
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "media") # корень медиа, сначала ищет тут, потом в MEDIA_URL (ето media каждлго апликейшена)
+MEDIA_ROOT = os.path.join(BASE_DIR, "MyProject/InternetMagazin/media") # корень медиа, сначала ищет тут, потом в MEDIA_URL (ето media каждлго апликейшена)
 
 MEDIA_URL = '/media/' # тут images каждого апликейшена
