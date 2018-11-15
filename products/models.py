@@ -68,3 +68,8 @@ class AddCarModel(models.Model):
     def get_absolute_url(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
         return reverse("detail_new_car_url", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
         # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )
+
+    @property
+    def image_url(self):
+        if self.image_product and hasattr(self.image_product, 'url'):
+            return self.image_product.url

@@ -9,7 +9,17 @@
 
             <div class="block__element flex-element cardelement" style="background-color: #d8d8d8">
                 <div class="mycard" style="">
-                    <img src="{{ object.image_product.url }}" alt="" class="image-responsive" style="width: 100%; border: solid">
+
+
+                    {% if object.image_product %}
+                        <p><img src="{{object.image_product.url }}" alt="" class="img-fluid" style="max-width: 100%; height: auto; border: solid"></p>
+                    {% else %}
+                        <img src="{% static "media/images/eskiz.jpg" %}" alt="" class="img-fluid" style=" max-width: 100%; height: auto;">
+                    {% endif %}
+
+                    <!-- <img src="{ object.image_product.url }}" alt="" class="image-responsive" style="width: 100%; border: solid"> -->
+
+
                 </div>
             </div>
 

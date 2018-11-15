@@ -1,3 +1,4 @@
+
 //var number = 50; // переменная число
 //var bool = true; // bool переменная
 //var string = "hello zohan"; // переменная строка

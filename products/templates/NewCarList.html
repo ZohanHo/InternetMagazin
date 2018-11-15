@@ -12,16 +12,25 @@
 
 {% block content %}
 
-        <div style="text-align: center; margin-top: 30px;"><h2>Новые поступления</h2></div>
+        <div style="text-align: center; margin-top: 30px;"><h2>Частные объявления о продаже</h2></div>
 
         <div class="block flex-container one" style="align-items: flex-start">
             {% for i in page %}
                 <div class="block__element flex-element two" style="border: solid; background-color: #ffffff69" >
-                    <div class="mycard" style="height: 217px ">
-                        <a href="{{ i.get_absolute_url }}"><img src="{{ i.image_product.url }}" alt="" class="image-responsive" style="width: 100%"></a>
+                    <div class="mycard" style="height: 217px  ">
+
+                        <!-- проверяем есть ли такая катринка в бд, если нету то ставим ескиз -->
+                        <a href="{{ i.get_absolute_url }}">
+                            {% if i.image_product %}
+                                <img src="{{ i.image_product.url }}" alt="" class="img-fluid " style="">
+                            {% else %}
+                                <img src="{% static "media/images/eskiz.jpg" %}" alt="" class="" style=" max-width: 100%; height: auto; margin-bottom: 3px">
+                            {% endif %}
+                        </a>
+
 
                     </div>
-                    <div style="margin-top: 13px;">
+                    <div style="margin-top: 15px;">
                         <a href="{{ i.get_absolute_url }}"><h5>{{ i.product_name }}</h5></a>
                             $ {{ i.price }}
                     </div>

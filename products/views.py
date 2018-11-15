@@ -141,7 +141,7 @@ class LandingDetailView(DetailView):
 class AddCarView(CreateView):
     model = AddCarModel
     template_name = "AddCar.html"
-    fields = ["product_name", "price", "discription_product", "category"] # , "image_product"
+    fields = ["product_name", "price", "discription_product", "category", "image_product"] #
 
 
 
