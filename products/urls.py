@@ -20,5 +20,8 @@ from .views import *
 urlpatterns = [
     path('', ListViewLanding.as_view(), name = "landing"),
     path('auto/', ListViewLandingAuto.as_view(), name = "landingauto"),
+    path('auto/add/', ListViewNewAuto.as_view(), name = "list_new_auto_url"),
     path('product/<pk>/', LandingDetailView.as_view(), name="product_detail_url"),
+    path('add/', AddCarView.as_view(), name="create_car_url"),
+    path('add/<pk>/', AddDetailView.as_view(), name="detail_new_car_url"),
 ]

@@ -8,6 +8,13 @@ class FormSearch(forms.Form):  # Класс Form - принимает данны
     sort = forms.ChoiceField(choices=(("auto", "auto"),("bike", "bike")), required=False )
 
 
+class AddCarForm(forms.ModelForm):
+
+
+    class Meta:
+        model = AddCarModel
+        fields = ["product_name", "price", "discription_product", "category", "image_product"] #
+
 
 
 

@@ -50,5 +50,21 @@ class ProductImages(models.Model):
         verbose_name = "Картинка"
         verbose_name_plural = "Картинки"
 
+class AddCarModel(models.Model):
 
+    product_name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    discription_product = models.TextField()
+    date = models.DateTimeField(auto_now_add=True, auto_now=False)
+    update = models.DateTimeField(auto_now=True, auto_now_add=False)
+    is_active = models.BooleanField(default=True)
+    category = models.ForeignKey(CategoryProduct, on_delete=models.CASCADE, blank=True, null=True)
+    image_product = models.ImageField(upload_to = "image_new_car/", blank=True)
 
+    class Meta:
+        verbose_name = "Автомобиль"
+        verbose_name_plural = "Автомобили"
+
+    def get_absolute_url(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
+        return reverse("detail_new_car_url", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
+        # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )

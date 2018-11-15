@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -39,7 +40,43 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'orders',
     'products',
+    'django.contrib.sites',
+
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    'allauth.socialaccount.providers.vk',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
+    'allauth.socialaccount.providers.odnoklassniki',
+    'allauth.socialaccount.providers.instagram',
 ]
+
+
+# для регистрации и соцсетей
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# для регистрации и соцсетей
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'SCOPE': ['email'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'METHOD': 'oauth2',
+        'VERIFIED_EMAIL': False
+    }
+}
+
+SITE_ID = 3
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_URL = "/accounts/login/"
+
+SOCIALACCOUNT_QUERY_EMAIL = True
 
 
 
@@ -70,7 +107,6 @@ TEMPLATES = [
         },
     },
 ]
-
 WSGI_APPLICATION = 'InternetMagazin.wsgi.application'
 
 
@@ -132,7 +168,7 @@ STATICFILES_DIRS = [
 # корень нашей статики, куда будут складыватся вся наша статика после команды (collectstatic) собраная с STATICFILES_DIRS и STATIC_URL для production сайта
 STATIC_ROOT = os.path.join(BASE_DIR, "static_diploy")
 
-STATIC_URL = '/static/' # статические файлы отдельных апликейшенов, css, js, шрифтц, потом ещет тут
+STATIC_URL = '/static/' # статические файлы отдельных апликейшенов, css, js, шрифты, потом ещет тут
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media") # корень медиа, сначала ищет тут, потом в MEDIA_URL (ето media каждлго апликейшена)
 

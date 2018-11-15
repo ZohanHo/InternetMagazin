@@ -11,19 +11,19 @@
 
 
 {% block content %}
-        <div style="text-align: center; margin-top: 30px;"><h2>Новые поступления</h2></div>
 
+        <div style="text-align: center; margin-top: 30px;"><h2>Новые поступления</h2></div>
 
         <div class="block flex-container one" style="align-items: flex-start">
             {% for i in page %}
                 <div class="block__element flex-element two" style="border: solid; background-color: #ffffff69" >
                     <div class="mycard" style="height: 217px ">
-                        <a href="{{ i.get_absolute_url_product }}"><img src="{{ i.image_product.url }}" alt="" class="image-responsive" style="width: 100%"></a>
+                        <a href="{{ i.get_absolute_url }}"><img src="{{ i.image_product.url }}" alt="" class="image-responsive" style="width: 100%"></a>
 
                     </div>
                     <div style="margin-top: 13px;">
-                        <h5>{{ i.product_image.product_name }}</h5>
-                           $ {{ i.product_image.price }}
+                        <a href="{{ i.get_absolute_url }}"><h5>{{ i.product_name }}</h5></a>
+                            $ {{ i.price }}
                     </div>
                      <div style="position: absolute; top: 289px; left: 45px; right: 45px;">
                         <button class="btn btn-success" name="" style="">
@@ -40,13 +40,13 @@
             {% endfor %}
         </div>
 
-
 {% endblock %}
 
 
 <!-- carousel -->
 
 {% block carousel %}
+
     <div class="block flex-container" style="display: flex; justify-content: center;">
             <div class="block__element flex-element" style="">
                 <span style="">
@@ -105,11 +105,10 @@
                                     {% elif foo > page.number|add:-3 and foo < page.number|add:3 %}
                                         <li class="page-item">
                                             <a class="page-link" href="?page={{ foo }}">{{ foo }}<span
-                                                    class="sr-only">(current)</span></a>
+                                                class="sr-only">(current)</span></a>
                                         </li>
                                     {% endif %}
                                 {% endfor %}
-
                                 <li class="page-item {% if not next_url %}disabled{% endif %}">
                                     <a class="page-link" href="{{ next_url }}" tabindex="-1">Next</a>
                                 </li>

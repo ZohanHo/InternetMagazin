@@ -40,3 +40,11 @@ class ProductImageAdmin(admin.ModelAdmin):
 
 admin.site.register(ProductImages, ProductImageAdmin)
 
+class AddCarAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in AddCarModel._meta.fields]
+
+
+    class Meta:
+        model = AddCarModel
+
+admin.site.register(AddCarModel, AddCarAdmin)

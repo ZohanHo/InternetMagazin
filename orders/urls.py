@@ -19,5 +19,4 @@ from .views import *
 
 urlpatterns = [
     path('', test, name="1"),
-
 ]

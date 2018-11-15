@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+    <div style="text-align: center; margin: 30px; color: green"><h2> -- Добавить обьявление -- </h2></div>
+
+            <div class="block flex-container cardblock">
+
+                <div class="block__element flex-element cardelement" style="background-color: #d8d8d8;">
+                      <form action="{% url "create_car_url" %}" method="post">
+                        {% csrf_token %}
+                          {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary" value="Save">Create</button>
+                </form>
+            </div>
+        </div>
+
+{% endblock %}
+
+
+

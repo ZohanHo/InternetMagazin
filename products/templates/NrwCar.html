@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+
+    <div style="text-align: center; margin: 30px; color: green"><h2>{{ object.product_name }}</h2></div>
+
+        <div class="block flex-container cardblock">
+
+            <div class="block__element flex-element cardelement" style="background-color: #d8d8d8">
+                <div class="mycard" style="">
+                    <img src="{{ object.image_product.url|default_if_none:'#' }}" alt="" class="image-responsive" style="width: 100%; border: solid"/>
+                </div>
+            </div>
+
+            <div class="block__element flex-element cardelement" style="background-color: #d8d8d8; ">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                               aria-controls="home"
+                               aria-selected="true">Описание</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                               aria-controls="profile"
+                               aria-selected="false">Доставка</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                               aria-controls="contact"
+                               aria-selected="false">Контакты</a>
+                        </li>
+                    </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <h3 class="card-title" style="padding: 2%">{{ object.product_name }}</h3>
+                        <h5 class="card-title" >$ {{ object.price }}</h5>
+                        <p class="card-text"
+                           style="text-align: justify">{{ object.discription_product }}</p>
+                        <a href="#" class="btn btn-success" style="width: 30%;"><img
+                                src="{% static "media/images/111.png" %}"
+                                alt="" class="image-responsive" style="width: 12%; margin-bottom: 5px; "> Добавить в
+                            корзину</a>
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">doc</div>
+                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">poc</div>
+                </div>
+            </div>
+
+        </div>
+
+
+{% endblock %}

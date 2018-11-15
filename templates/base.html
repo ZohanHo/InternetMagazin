@@ -1,15 +1,20 @@
 {% load static %}
 
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>
-            Hornet
+            Hornet - Магазан по продаже мотоцыклов и автомобилей
         </title>
 
+        <!-- jquery 2.2.0 -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
         <!-- отображает значек на вкладке свйта -->
-        <link rel="shortcut icon" href="{% static 'media/images/favicon2.png' %}" type="image/png"/> <!--Какртинка для title-->
+        <link rel="shortcut icon" href="{% static 'media/images/favicon1.png' %}" type="image/png"/> <!--Какртинка для title-->
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
               integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -24,8 +29,11 @@
 
     <body>
 
+
+
+
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="display: block">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="display: block;">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
                     aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -45,19 +53,13 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Create
+                            Used cars
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Create Post</a>
-                            <a class="dropdown-item" href="#">Create Tag</a>
+                            <a class="dropdown-item" href="{% url "create_car_url" %}">Add advertisement for sale</a>
+                            <a class="dropdown-item" href="{% url "list_new_auto_url" %}">View sale advertisement</a>
                         </div>
                     </li>
-                {% if request.user.is_authenticated and request.user.is_staff %} <!-- усли пользователь авторизован и пользователь админ, то отображать -->
-                    <li class="nav-item active" style="color: saddlebrown">
-                    <a class="nav-link" style="color: #00aced" href="/admin">User: {{ user }}</a>
-                    </li>
-                {% endif %}
-
                 </ul>
 
                 <form action="" method="get" class="form-inline my-2 my-lg-0">
@@ -65,8 +67,27 @@
                         <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
                 </form>
 
+                <!-- Authenticated -->
+                <ul class="" style="margin-top: -4px; margin-bottom: 0;">
+                    {% if user.is_authenticated or request.user.is_staff  %} <!-- если пользователь авторизован и пользователь админ, то отображать -->
+                        <li style="color: #343A40"><a style="color: #00aced" href="/admin">User: {{ user }}</a></li>
+                        <li style="color: #343A40"><a style="color: #993300" href="/accounts/logout?next=/accounts/login">Log out</a></li>
+                    {% else %}
+                        <li style="color: #343A40"><a style="color: #993300" href="/accounts/login?next=/accounts/logout">Sing in</a></li>
+
+                    {% endif %}
+                </ul>
             </div>
         </nav>
+
+
+
+
+            <script src="{% static 'css/script.js' %}"></script>
+
+
+
+            {% block under %}{% endblock %}
 
             {% block carousel %}{% endblock %}
 
@@ -77,6 +98,8 @@
             {% block pagination %}{% endblock %}
 
             {% include "pagination.html" %}
+
+
 
 
     <!-- Footer -->
@@ -127,7 +150,7 @@
         </footer>
 
 
-        <script src="{% static 'js/script.js' %}"></script>
+
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
                 integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
