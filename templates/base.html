@@ -19,12 +19,13 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
               integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-        <!-- static - styles.css-->
-        <link rel="stylesheet" href="{% static "css/style.css" %}">
-
         <!--footer-->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+        <!-- static - styles.css, наш фаил со стилями должен быть ниже стилей bootstrap. что бы в нашем можно было переопредилить-->
+        <link rel="stylesheet" href="{% static "css/style.css" %}">
+
     </head>
 
     <body>
@@ -33,6 +34,20 @@
 
 
         <!-- Navbar -->
+
+        <nav class="navbar navbar-default navbar-top" style="padding: 0; background-color: #3D434A">
+            <div style="margin-left: 90%">
+                <!-- Authenticated -->
+
+                {% if user.is_authenticated or request.user.is_staff  %} <!-- если юзер авторизован или юзер админ, то отображать -->
+                    <a style="color: #00aced" href="/admin">User: {{ user }} </a>
+                    <a style="color: #993300" href="/accounts/logout?next=/accounts/login">Log out</a>
+                {% else %}
+                    <a style="color: #993300" href="/accounts/login?next=/accounts/logout">Sing in</a>
+                {% endif %}
+            </div>
+        </nav>
+
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="display: block;">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
                     aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,28 +77,42 @@
                     </li>
                 </ul>
 
-                <form action="" method="get" class="form-inline my-2 my-lg-0">
+
+                <div style="position: relative">
+
+                </div>
+                <ul class="navbar-nav mr-10 mt-0 mt-lg-0" >
+                    <li class="" style="">
+                        <div class="basket-container" style="position: absolute; left: 77%; top: 20%;">
+                            <a href="#" style="color: white">
+                            <img id="basket" src="{% static "media/images/cart.png" %}" alt="" title="Basket" class="image-responsive"
+                                     style="width: 13%;">
+                                <!-- сласс hidden в 4 бутстрп d-none, по умолчанию скрыто -->
+                                    <div id="basket-item" class="basket-item d-none" style="position: absolute; background-color: #3E434A;
+                                                            left: 10px; top: 45px; padding: 15px; width: 300px; z-index: 5;">
+                                        <ul class="basket" >
+
+                                        </ul>
+                                </div>
+                            </a>
+                        </div>
+
+                    </li>
+                </ul>
+
+                <form action="" method="get" class="form-inline my-2 my-lg-0" style="">
                         <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
                 </form>
 
-                <!-- Authenticated -->
-                <ul class="" style="margin-top: -4px; margin-bottom: 0;">
-                    {% if user.is_authenticated or request.user.is_staff  %} <!-- если пользователь авторизован и пользователь админ, то отображать -->
-                        <li style="color: #343A40"><a style="color: #00aced" href="/admin">User: {{ user }}</a></li>
-                        <li style="color: #343A40"><a style="color: #993300" href="/accounts/logout?next=/accounts/login">Log out</a></li>
-                    {% else %}
-                        <li style="color: #343A40"><a style="color: #993300" href="/accounts/login?next=/accounts/logout">Sing in</a></li>
+        </div>
 
-                    {% endif %}
-                </ul>
-            </div>
         </nav>
 
 
 
+        <script src="{% static "products/js/script.js" %}"></script>
 
-            <script src="{% static 'css/script.js' %}"></script>
 
 
 
@@ -108,7 +137,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-3">
-                        <h2 class="logo"><a href="#"> LOGO </a></h2>
+                        <h2 class="logo"><a href="#"> Hornet </a></h2>
                     </div>
                     <div class="col-sm-2">
                         <h5>Get started</h5>
@@ -145,7 +174,7 @@
                 </div>
             </div>
             <div class="footer-copyright">
-                <p>© 2016 Copyright Text </p>
+                <p>© 2018 Copyright Text </p>
             </div>
         </footer>
 

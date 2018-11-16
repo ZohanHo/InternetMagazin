@@ -5,6 +5,8 @@ from django.views.generic import *
 from django.db.models import Q
 from django.core.paginator import Paginator
 from .forms import *
+from django.urls import reverse_lazy
+
 
 class ListViewLanding(ListView):
     model = ProductImages
@@ -211,5 +213,16 @@ class ListViewNewAuto(ListView):
         context["prev_url"] = prev_url
         context["next_url"] = next_url
 
-
         return context
+
+class CarUpdateViwe(UpdateView):
+    model = AddCarModel
+    fields = ["product_name", "price", "discription_product", "category", "image_product"]
+    template_name = "Update_car.html"
+
+
+
+class CarDeleteView(DeleteView):
+    model = AddCarModel
+    success_url = reverse_lazy('list_new_auto_url')
+    template_name = "Delete_car.html"

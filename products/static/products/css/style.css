@@ -277,7 +277,7 @@ div {
 .content{
    flex: 1 0 auto;
    -webkit-flex: 1 0 auto;
-   min-height: 200px;
+   min-height: 150px;
 }
 
 #myFooter{
@@ -402,5 +402,5 @@ div {
     background-color: gainsboro
 }
 
-/* тестовый адаптивный блок */
+
 

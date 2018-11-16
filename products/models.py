@@ -69,7 +69,10 @@ class AddCarModel(models.Model):
         return reverse("detail_new_car_url", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
         # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )
 
-    @property
-    def image_url(self):
-        if self.image_product and hasattr(self.image_product, 'url'):
-            return self.image_product.url
+    # url для tag_update_url
+    def get_abs_update_url(self):  #
+        return reverse("update_car_url", kwargs={"pk": self.pk})
+
+    # url для post_del_url
+    def get_abs_del_url(self):  #
+        return reverse("delete_car_url", kwargs={"pk": self.pk})

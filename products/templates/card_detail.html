@@ -47,20 +47,27 @@
                         <h5 class="card-title" >$ {{ object.product_image.price }}</h5>
                         <p class="card-text"
                            style="text-align: justify">{{ object.product_image.discription_product }}</p>
-                        <a href="#" class="btn btn-success" style="width: 30%;"><img
-                                src="{% static "media/images/111.png" %}"
-                                alt="" class="image-responsive" style="width: 12%; margin-bottom: 5px; "> Добавить в
-                            корзину</a>
-                    </div>
+
+
+                        <!-- через data- атрибут можно взять что то с кверисет -->
+                        <a href="#"
+                           id="js_bay"
+                           class="btn btn-success test"
+                           style="width: 20%;"
+                           data-new_car_id = "{{ object.product_image.id }}"
+                           data-new_car_name = "{{ object.product_image.product_name }}"
+                           data-new_car_price = "{{ object.product_image.price }}">
+                            <img src="{% static "media/images/111.png" %}"
+                                alt="Regbnm" class="image-responsive" style="width: 14%; margin-bottom: 3px;">
+                                Купить
+                        </a>
+
+                        </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">doc</div>
                     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">poc</div>
                 </div>
             </div>
 
         </div>
-
-
-
-
 
 {% endblock %}

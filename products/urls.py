@@ -24,4 +24,6 @@ urlpatterns = [
     path('product/<pk>/', LandingDetailView.as_view(), name="product_detail_url"),
     path('add/', AddCarView.as_view(), name="create_car_url"),
     path('add/<pk>/', AddDetailView.as_view(), name="detail_new_car_url"),
+    path('add/<pk>/update/', CarUpdateViwe.as_view(), name="update_car_url"),
+    path('add/<pk>/delete/', CarDeleteView.as_view(), name="delete_car_url"),
 ]

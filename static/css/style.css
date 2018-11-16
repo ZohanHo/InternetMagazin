@@ -170,6 +170,9 @@ div {
     background-color: #3c3d41;
     color: white;
     padding-top: 30px;
+
+
+
 }
 
 #myFooter .footer-copyright {
@@ -277,11 +280,15 @@ div {
 .content{
    flex: 1 0 auto;
    -webkit-flex: 1 0 auto;
-   min-height: 200px;
+   min-height: 150px;
 }
 
+
+
+
 #myFooter{
-   flex: 0 0 auto;
+
+    flex: 0 0 auto;
    -webkit-flex: 0 0 auto;
 }
 

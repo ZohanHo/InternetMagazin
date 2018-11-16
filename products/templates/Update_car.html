@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+    <div class="container" style="margin: 3%;">
+        <div class="row">
+            <div class="col-md-12 offset-1">
+               <form action="{{ object.get_abs_update_url }}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% if text.errors %}
+                        <div class="alert alert-danger">
+                            {{ text.errors }}
+                        </div>
+                    {% endif %}
+                        <div>
+                            <h4 style="color: #0077e2">Update Car: {{ object.product_name }}</h4>
+                        </div><br/>
+                        <div class="form-group">
+                            {{ form.as_p }}
+                        </div>
+                    <input type="submit" value="update" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

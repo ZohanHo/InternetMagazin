@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+    <div class="container" style="margin: 10%;">
+        <div class="row">
+            <div class="col-md-12 offset 3">
+                <h3 style="margin-bottom: 20px"> Car delete:</h3>
+                <form action="{{ object.get_abs_del_url }}" method="post">{% csrf_token %}
+                    <h4>Вы увенеренны что хотите удалить обьявление: "{{ object.product_name }}"?</h4>
+                    <input type="submit" value="Удалить" name="button" class="btn btn-danger">
+                    <a href = "{% url "list_new_auto_url"  %}">
+                        <button type="button" name="button" class="btn btn-primary">Отмена</button>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

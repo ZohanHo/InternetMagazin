@@ -9,8 +9,6 @@
             <div class="block flex-container cardblock">
 
                 <!-- для того что бы картинка грузилась и сохранялась нужно указать enctype="multipart/form-data" -->
-
-
                 <div class="block__element flex-element cardelement" style="background-color: #d8d8d8;">
                       <form action="{% url "create_car_url" %}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
