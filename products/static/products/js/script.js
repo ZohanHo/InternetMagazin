@@ -1,16 +1,46 @@
 $(document).ready(function () {   // document селектор - ето вся страница целиком, ready метод (событие)
-    $("#js_bay").on('click', function () {
+
+    $("#js_bay").on('click', function (event) {
+        event.preventDefault(); //клик по ссылке не отправляет по новому урлу
         var ref = $("#js_bay"); // наша ссылка где прописан data-new_car_id, и остальные
         var new_car_id = ref.data("new_car_id"); // помещает в переменную результат
         var new_car_name = ref.data("new_car_name");
         var new_car_price = ref.data("new_car_price");
+        var session_key = ref.data("session_key");
         var new_car_price_int = parseInt(new_car_price);
         var num = parseInt(6);
         var total = new_car_price_int * num;
 
-    $("#basket-item ul").append('<li>' + new_car_name+ '<br>' + '$' + new_car_price + '   <a class="delete" href="">Delete</a>' + '</li>'); //по клику добавляем елемент, с перемен. + конкатен
 
 
+        // AJAX
+        var data = {}; // data ето то что мы отправляем, название, цена
+        var url = "/product/" + new_car_id + "/";  //form.attr("action") - так можно считать url c атрибута формы если указать не путь
+
+        data.product_id = new_car_id;  // добавил в словарь date  - new_car_id
+        data.new_car_name = new_car_name;  // добавил в словарь date  - new_car_id
+        data.new_car_price = new_car_price;  // добавил в словарь date  - new_car_id
+        data.session_key = session_key;  // добавил в словарь date  - new_car_id
+
+        //var csrf_token = $('#csrf_getting_form[name="csrfmiddlewaretoken"]').val();  //вытянуть токен и использовать если нужно
+        //data["csrfmiddlewaretoken"] = csrf_token; //ложим его в наш словарь data
+
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: data,
+            cache: true,
+            success: function () {
+            $(".basket-item ul").append(new_car_name+ '<br>' + '$' + new_car_price + ' <a class="delete" href="">' +
+                                                'Delete</a>' + '</li>'); //по клику добавляем елемент, с перемен. + конкатен
+            console.log('OK');
+            console.log(data);
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
     });
 
 
@@ -41,14 +71,39 @@ $(document).ready(function () {   // document селектор - ето вся �
     });
 });
 
-
-$(document).on('click','.delete',function (e) {
-    e.preventDefault();
-    $(this).closest('li').remove(); // closes ето ближайший к нему елемент и указуем что нам нужен li, удаляем,
+$(document).on('click','.delete',function () {
+    $(this).closest('li').remove(); // closest ето ближайший к нему елемент и указуем что нам нужен li, удаляем,
 });
 
 
 
+
+
+
+// function show() {
+//     $(document).ready(function () {
+//         var tag = $('#testajx');
+//         var datenew = tag.data("datatime");
+//
+//         $.ajax({
+//             url: "test.html",
+//             cache: false,
+//             datenew: datenew,
+//             tag: tag,
+//             success: function (datenew) {
+//             console.log('OK');
+//             tag.html(datenew);
+
+//
+//     }
+// });
+//
+//
+//
+//
+//     });
+// }
+//setInterval('show()', 1000);
 
 
 //var number = 50; // переменная число
@@ -66,15 +121,10 @@ $(document).on('click','.delete',function (e) {
 //alert("Сайт в разработке")
 
 
-//$('document').ready(function () {   // document селектор - ето вся страница целиком, ready метод (событие)
-    //$("body").append('<a href="https://translate.google.cn/m/translate?hl=ru">Google</a>'); // в body подключили тег а (добавили елемент)
-
-    //$("h2").remove(); // по селектору удаляет все тега p
-
-    //var clone;
-    //clone= $("p").clone(); // клонирование елементов
-    //$("div").append(clone)
-//});
+// $('document').ready(function () {   // document селектор - ето вся страница целиком, ready метод (событие)
+//     $("p").append('<a href="https://translate.google.cn/m/translate?hl=ru">Google</a>'); // в body подключили тег а (добавили елемент)
+//
+// });
 
 
 // функция выводит значение на новой странице которое вбиваем в форму
@@ -104,4 +154,16 @@ $(document).on('click','.delete',function (e) {
     //test1 = prompt("Как ваше имя ?", ""); // событие prompt (появится окно с первым аргументом,
                                             // то что введем выведется во всех div, можем только одному div, илии еще какому тегу)
     //$("div").html(test1)
+//});
+
+
+// $("document").ready(function () {
+//     $.ajax({
+//         url: "/date/",
+//         cache: false,
+//         success: function (p) {
+//             $('#testajx').html(p);
+//             concole.log("ok");
+//         }
+//     });
 //});

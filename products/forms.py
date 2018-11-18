@@ -17,4 +17,9 @@ class AddCarForm(forms.ModelForm):
 
 
 
+class ContactForm(forms.Form):
+    name = forms.CharField()
+
+
+
 

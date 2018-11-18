@@ -6,6 +6,8 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from .forms import *
 from django.urls import reverse_lazy
+import datetime
+
 
 
 class ListViewLanding(ListView):
@@ -25,6 +27,7 @@ class ListViewLanding(ListView):
 
 
     def get_context_data(self, **kwargs):
+
         querys = ProductImages.objects.all()
 
         queryset = ProductImages.objects.filter(product_image__category__name__iexact="bike")
@@ -137,6 +140,16 @@ class LandingDetailView(DetailView):
     model = ProductImages
     template_name = "card_detail.html"
 
+    def dispatch(self, request, *args, **kwargs):
+        self.session_key = request.session.session_key
+        if not self.session_key:
+            request.session.cycle_key() # cycle_key - создает ключ вручную если его нету
+        return super(LandingDetailView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(LandingDetailView, self).get_context_data(**kwargs)
+        context ["key"] =  self.session_key
+        return context
 
 
 
@@ -144,9 +157,6 @@ class AddCarView(CreateView):
     model = AddCarModel
     template_name = "AddCar.html"
     fields = ["product_name", "price", "discription_product", "category", "image_product"] #
-
-
-
 
 
 class AddDetailView(DetailView):
@@ -161,14 +171,14 @@ class ListViewNewAuto(ListView):
     def dispatch(self, request, *args, **kwargs):  # dispath определяет с каким запросом к нам прилетел запрос
         # Создаем переменную в которую кладем весь масив request.GET, а именно даннные которые пришли от пользователя в строке запроса,
         # будем с request.GET брать наш search и sort
+
         self.form = FormSearch(request.GET)
         # метод проверяет соответствуют ли данные той форме которую мы прописали, после чего можем оперировать таким атрибутом как cleaned_data
         self.form.is_valid()
         #
-        self.search = ProductImages(
-            request.POST or None)  # Создали переменную для работы с POST, используется когда fprm.modelform
-        return super(ListViewNewAuto, self).dispatch(request, *args,
-                                                     **kwargs)  # после чего вызываем super, что бы функция работала стандартно
+        self.search = ProductImages(request.POST or None)  # Создали переменную для работы с POST, используется когда fprm.modelform
+
+        return super(ListViewNewAuto, self).dispatch(request, *args,**kwargs)  # после чего вызываем super, что бы функция работала стандартно
 
     def get_context_data(self, **kwargs):
         #queryset = ProductImages.objects.all()  # filter(product_image__category__name__iexact="bike")
@@ -226,3 +236,27 @@ class CarDeleteView(DeleteView):
     model = AddCarModel
     success_url = reverse_lazy('list_new_auto_url')
     template_name = "Delete_car.html"
+
+
+
+
+class TestView(TemplateView):
+    template_name = "test.html"
+
+    def dispatch(self, request, *args, **kwargs):
+
+        self.date = datetime.datetime.now()
+        print(request.GET)
+        self.name = request.GET.get('name')
+        self.session_key = request.session.session_key
+        print(request.POST)
+        self.csrf = request.GET.get('csrfmiddlewaretoken')
+        return super(TestView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(TestView, self).get_context_data(**kwargs)
+        context ["data"] = self.date
+        context ["csrf"] = self.csrf
+        context ["key"] =  self.session_key
+
+        return context

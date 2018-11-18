@@ -3,7 +3,7 @@
 {% load static %}
 {% block card_bike %}
 
-    <div style="text-align: center; margin: 30px; color: green"><h2>{{ object.product_image.product_name }}</h2></div>
+    <div  style="text-align: center; margin: 30px; color: green"><h2>{{ object.product_image.product_name }}</h2></div>
 
         <div class="block flex-container cardblock">
 
@@ -50,16 +50,21 @@
 
 
                         <!-- через data- атрибут можно взять что то с кверисет -->
-                        <a href="#"
+                        <a href=""
                            id="js_bay"
                            class="btn btn-success test"
                            style="width: 20%;"
-                           data-new_car_id = "{{ object.product_image.id }}"
+                           data-new_car_id = "{{ object.id }}"
                            data-new_car_name = "{{ object.product_image.product_name }}"
-                           data-new_car_price = "{{ object.product_image.price }}">
+                           data-new_car_price = "{{ object.product_image.price }}"
+                            data-session_key = "{{ key }}">
+
                             <img src="{% static "media/images/111.png" %}"
-                                alt="Regbnm" class="image-responsive" style="width: 14%; margin-bottom: 3px;">
-                                Купить
+                                alt="" class="image-responsive" style="width: 14%; margin-bottom: 3px;">
+
+                            Купить
+
+
                         </a>
 
                         </div>

@@ -24,7 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('orders/', include("orders.urls"), name="orders"),
     path('', include("products.urls"), name="products"),
-    path('blog/post/', include("products.urls"), name="products_blog"),
 
     re_path(r'^accounts/', include('allauth.urls')),
 
