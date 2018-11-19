@@ -7,6 +7,7 @@ from django.core.paginator import Paginator
 from .forms import *
 from django.urls import reverse_lazy
 import datetime
+from orders.models import *
 
 
 
@@ -140,17 +141,23 @@ class LandingDetailView(DetailView):
     model = ProductImages
     template_name = "card_detail.html"
 
+
+
     def dispatch(self, request, *args, **kwargs):
+
         self.session_key = request.session.session_key
         if not self.session_key:
-            request.session.cycle_key() # cycle_key - создает ключ вручную если его нету
+            request.session.cycle_key()  # cycle_key - создает ключ вручную если его нету
+
+        print(request.GET.get("product_id"))
+
         return super(LandingDetailView, self).dispatch(request, *args, **kwargs)
+
 
     def get_context_data(self, **kwargs):
         context = super(LandingDetailView, self).get_context_data(**kwargs)
         context ["key"] =  self.session_key
         return context
-
 
 
 class AddCarView(CreateView):
@@ -260,3 +267,7 @@ class TestView(TemplateView):
         context ["key"] =  self.session_key
 
         return context
+
+def Basket(request):
+    print(request.GET)
+    return render(request, "basket.html", context={})

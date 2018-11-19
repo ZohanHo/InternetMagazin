@@ -28,4 +28,5 @@ urlpatterns = [
     path('add/<pk>/delete/', CarDeleteView.as_view(), name="delete_car_url"),
 
     path('date/', TestView.as_view(),  name = "test_view_url"),
+    path('basket/', Basket,  name = "basket_url"),
 ]

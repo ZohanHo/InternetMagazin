@@ -31,4 +31,13 @@ class StatusAdmin(admin.ModelAdmin):
     class Meta:
         model = Status
 
-admin.site.register(Status)
+admin.site.register(Status, StatusAdmin)
+
+
+class BasketAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in BasketModel._meta.fields]
+
+    class Meta:
+        model = BasketModel
+
+admin.site.register(BasketModel, BasketAdmin)

@@ -19,7 +19,7 @@ class Product(models.Model):
 
     product_name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    discription_product = models.TextField()
+    discription_product = models.TextField(blank=True)
     date = models.DateTimeField(auto_now_add=True, auto_now=False)
     update = models.DateTimeField(auto_now=True, auto_now_add=False)
     is_active = models.BooleanField(default=True)
@@ -76,3 +76,5 @@ class AddCarModel(models.Model):
     # url для post_del_url
     def get_abs_del_url(self):  #
         return reverse("delete_car_url", kwargs={"pk": self.pk})
+
+

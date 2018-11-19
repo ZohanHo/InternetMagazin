@@ -1,6 +1,4 @@
 {% load static %}
-{% load staticfiles %}
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -89,7 +87,8 @@
                 <ul class="navbar-nav mr-10 mt-0 mt-lg-0" >
                     <li class="" style="">
                         <div class="basket-container" style="position: absolute; left: 77%; top: 20%;">
-                            <a href="#" style="color: white">
+
+                            <a href="{% url "basket_url" %}" style="color: white">
                             <img id="basket" src="{% static "media/images/cart.png" %}" alt="" title="Basket" class="image-responsive"
                                      style="width: 13%;">
                                 <!-- сласс hidden в 4 бутстрп d-none, по умолчанию скрыто -->
@@ -130,6 +129,8 @@
             {% block card_bike %}{% endblock %}
 
             {% block pagination %}{% endblock %}
+
+            {% block basket %}{% endblock %}
 
             {% include "pagination.html" %}
 
@@ -182,12 +183,6 @@
                 <p>© 2018 Copyright Text </p>
             </div>
         </footer>
-
-
-
-
-
-
 
 
     </body>

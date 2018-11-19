@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block basket %}
+
+    <div>
+        <h2>Ваша Корзина - товаров в корзине ? штук</h2>
+
+        <a href="/">< Вернуться к сайту</a>
+
+        <div style="margin: 2%">
+            <img  id="" src="{% static "media/images/image1.jpg" %}" alt="" title="" class="image-responsive"
+                                     style="width: 50%;">
+        </div>
+
+
+        <h4>Карточка товара   количество цена   условия доставка</h4>
+
+    </div>
+
+
+    <div>
+        Общая сумма
+        <button type="submit" style="" class="btn btn-success">Овормить заказ</button>
+    </div>
+
+
+
+
+{% endblock %}
