@@ -24,7 +24,9 @@ class Product(models.Model):
     update = models.DateTimeField(auto_now=True, auto_now_add=False)
     is_active = models.BooleanField(default=True)
     discount = models.IntegerField(default=0, blank=True)
-    category = models.ForeignKey(CategoryProduct, on_delete=models.CASCADE, blank=True, null=True)
+    # on_delete=models.CASCADE - все поля всязаные тоже удалятся или добавятся (тянет в базе всю последовательность)
+    category = models.ForeignKey(CategoryProduct, on_delete=True, blank=True, null=True)
+
 
 
     def __str__(self):
@@ -37,7 +39,7 @@ class Product(models.Model):
 
 class ProductImages(models.Model):
     image_product = models.ImageField(upload_to="")
-    product_image = models.ForeignKey(Product, related_name="images", on_delete=models.CASCADE, blank=True)
+    product_image = models.ForeignKey(Product, related_name="images", on_delete=True, blank=True)
     date = models.DateTimeField(auto_now_add=True, auto_now=False)
     update = models.DateTimeField(auto_now=True, auto_now_add=False)
     is_active = models.BooleanField(default=True)
@@ -58,7 +60,7 @@ class AddCarModel(models.Model):
     date = models.DateTimeField(auto_now_add=True, auto_now=False)
     update = models.DateTimeField(auto_now=True, auto_now_add=False)
     is_active = models.BooleanField(default=True)
-    category = models.ForeignKey(CategoryProduct, on_delete=models.CASCADE, blank=True, null=True)
+    category = models.ForeignKey(CategoryProduct, on_delete=True, blank=True, null=True)
     image_product = models.ImageField(upload_to = "image_new_car/", blank=True)
 
     class Meta:

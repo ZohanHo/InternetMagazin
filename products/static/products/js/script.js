@@ -1,37 +1,50 @@
 $(document).ready(function () {   // document селектор - ето вся страница целиком, ready метод (событие)
 
-    $("#js_bay").on('click', function (event) {
+    var form = $('#csrf_form');
+    var ref = $("#js_bay");
+    console.log(form);
+
+    form.on('click', function (event) {
         event.preventDefault(); //клик по ссылке не отправляет по новому урлу
-        var ref = $("#js_bay"); // наша ссылка где прописан data-new_car_id, и остальные
-        var new_car_id = ref.data("new_car_id"); // помещает в переменную результат
-        var new_car_name = ref.data("new_car_name");
-        var new_car_price = ref.data("new_car_price");
-        var session_key = ref.data("session_key");
+         // наша ссылка где прописан data-new_car_id, и остальные
+        var new_car_id = form.data("new_car_id"); // помещает в переменную результат
+        var new_car_name = form.data("new_car_name");
+        var new_car_price = form.data("new_car_price");
+        var session_key = form.data("session_key");
         var new_car_price_int = parseInt(new_car_price);
         var num = parseInt(6);
         var total = new_car_price_int * num;
 
 
+
+
         // AJAX
+
         var data = {}; // data ето то что мы отправляем, название, цена
-        var url = "/product/" + new_car_id + "/";  //form.attr("action") - так можно считать url c атрибута формы если указать не путь
+        var url = form.attr("action");  //form.attr("action"); - так можно считать url c атрибута формы если указать не путь
+        // "/product/" + new_car_id + "/";
+        var csrftoken = $("[name=csrfmiddlewaretoken]").val(); //вытянуть токен и использовать если нужно
+        data["csrfmiddlewaretoken"] = csrftoken; //ложим его в наш словарь data
 
         data.product_id = new_car_id;  // добавил в словарь date  - new_car_id
         data.new_car_name = new_car_name;  // добавил в словарь date  - new_car_id
         data.new_car_price = new_car_price;  // добавил в словарь date  - new_car_id
         data.session_key = session_key;  // добавил в словарь date  - new_car_id
+        //data.products_total_num = products_total_num;
 
-        //var csrf_token = $('#csrf_getting_form[name="csrfmiddlewaretoken"]').val();  //вытянуть токен и использовать если нужно
-        //data["csrfmiddlewaretoken"] = csrf_token; //ложим его в наш словарь data
-
+        console.log(data);
 
 
         $.ajax({
             url: url,
-            type: 'GET',
+            type: 'POST',
             data: data,
-            cache: true,
-            success: function () {
+            cache: false,
+            success: function (data) {  // Что бля за data и как он до нее достучался ???
+            if (data.products_total_num){
+                $('#span').text("("+ data.products_total_num + ")");
+            }
+            //console.log(data);
             //css свойство укаали scrollTop() то всегда всерху где бы небыли на странице + 220
             $('.popup').css({"top":$(window).scrollTop() + 220}).addClass('active');
             var bg_popup = $('.bg_popup');
@@ -41,11 +54,11 @@ $(document).ready(function () {   // document селектор - ето вся �
                 bg_popup.fadeOut();
             });
 
-            $(".basket-item ul").append(new_car_name + '<br>' + '$' + new_car_price + ' <a class="delete" href="">' +
-                'Delete</a>' + '</li>'); //по клику добавляем елемент, с перемен. + конкатен
+            $(".basket-item ul").append('<li>' + new_car_name + '$' + new_car_price + ' <a class="delete" href="#">' +
+                'Delete' + '</a>' + '</li>' + '</br>' ); //по клику добавляем елемент, с перемен. + конкатен
 
-                console.log('OK');
-                console.log(data);
+                console.log('OK - add - ajax');
+
             },
             error: function () {
                 console.log('error');
@@ -74,6 +87,8 @@ $(document).ready(function () {   // document селектор - ето вся �
     //     basket_item.toggleClass("d-none");
     // });
 
+ //  -------------- hover ------------------
+
     basket_container.mouseover(function () { // или клие или наведение
         basket_item.toggleClass("d-none"); //при наведении удаляется временно класс если он есть
     });
@@ -81,17 +96,40 @@ $(document).ready(function () {   // document селектор - ето вся �
     basket_container.mouseout(function () { // или клие или наведение
         basket_item.toggleClass("d-none"); //при наведении удаляется временно класс
     });
+//--------------------------------------------
+
 });
 
-$(document).on('click','.delete',function () {
-    $(this).closest('li').remove(); // closest ето ближайший к нему елемент и указуем что нам нужен li, удаляем,
+
+//-------------------------------------------------- del -----------------------
+//var new_car_id = ref.data("new_car_id"); // помещает в переменную результат
+    data = {}; // data ето то что мы отправляем, название, цена
+    var url = "/product/" + "85" + "/";  //form.attr("action") - так можно считать url c атрибута формы если указать не путь
+
+
+$(document).on('click', ".delete",function () {
+
+    $.ajax({
+        url: url,
+        type: 'get',
+        data: data,
+        cache: false,
+        success: function () {
+            $(".delete").closest('li').remove();
+            console.log('OK - del - ajax');
+
+        },
+        error: function () {
+            console.log('error');
+        }
+     });
 });
-//
-//
-//
-//
-//
-//
+
+//--------------------------------------------------        ------------------------
+
+
+
+
 // // function show() {
 // //     $(document).ready(function () {
 // //         var tag = $('#testajx');
@@ -179,3 +217,18 @@ $(document).on('click','.delete',function () {
 //         }
 //     });
 //});
+
+//    -----------------   откат ---------------------
+//  $("#js_bay").on('click', function (event) {
+//         event.preventDefault(); //клик по ссылке не отправляет по новому урлу
+//         var form = $('#csrf');
+//         var ref = $("#js_bay"); // наша ссылка где прописан data-new_car_id, и остальные
+//         var new_car_id = ref.data("new_car_id"); // помещает в переменную результат
+//         var new_car_name = ref.data("new_car_name");
+//         var new_car_price = ref.data("new_car_price");
+//         var session_key = ref.data("session_key");
+//         var new_car_price_int = parseInt(new_car_price);
+//         var num = parseInt(6);
+//         var total = new_car_price_int * num;
+
+    // ------------------------------

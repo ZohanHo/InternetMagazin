@@ -49,45 +49,54 @@
                            style="text-align: justify">{{ object.product_image.discription_product }}</p>
 
 
-                        <!-- через data- атрибут можно взять что то с кверисет -->
-                        <a href=""
-                           id="js_bay"
-                           class="btn btn-success test"
-                           style="width: 20%;"
-                           data-new_car_id = "{{ object.id }}"
-                           data-new_car_name = "{{ object.product_image.product_name }}"
-                           data-new_car_price = "{{ object.product_image.price }}"
-                            data-session_key = "{{ key }}">
-
-                            <img src="{% static "media/images/111.png" %}"
-                                alt="" class="image-responsive" style="width: 14%; margin-bottom: 3px;">
-                            Купить
-                        </a>
-
-
-
-
                         </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">doc</div>
                     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">poc</div>
                 </div>
-            </div>
 
+
+
+                <br>
+
+                <div style=" " >
+                    <form id="csrf_form" action="{% url "basket_url" %}" method="post"  class=""
+                            data-new_car_id = "{{ object.id }}"
+                            data-new_car_name = "{{ object.product_image.product_name }}"
+                            data-new_car_price = "{{ object.product_image.price }}"
+                            data-session_key = "{{ key }}"> {% csrf_token %}
+
+                        <button style="width: 27%" id="js_bay" type="submit" class="btn btn-primary" value="">{% csrf_token %}
+
+                            <img src="{% static "media/images/111.png" %}"
+                                    alt="" class="image-responsive" style="width: 10%; margin-bottom: 3px;">
+                            Дбавить в корзину
+                        </button>
+
+                    </form>
+                </div>
+
+
+
+
+            </div>
         </div>
 
+
+
+
+        <!-- всплываюшее окно - popup  -->
         <div class="popup" style="">
             <h5 style="color: #00aced; text-align: center">Товар  {{ object.product_image.product_name }} был добавлен в корзину</h5>
-            <div style="text-align: center; padding: 2%">
+            <div style="text-align: center; padding: 2%" class="card-footer">
                 <a href="{% url "basket_url" %}" class="btn btn-secondary">Перейти к корзине</a>
                 <a href="{{ object.get_absolute_url }}" class="btn btn-secondary">Вернуться к сайту</a>
             </div>
-            <div style="text-align: center">
+            <div class="card-footer text-muted" style="text-align: center">
                 <img  id="" src="{% static "media/images/black.jpg" %}" alt="" title="" class="image-responsive"
                                      style="width: 90%; margin: 3%">
             </div>
 
         </div>
-
         <div class="bg_popup" style=""></div>
 
 

@@ -8,6 +8,7 @@ from .forms import *
 from django.urls import reverse_lazy
 import datetime
 from orders.models import *
+from django.http import JsonResponse
 
 
 
@@ -160,6 +161,7 @@ class LandingDetailView(DetailView):
         return context
 
 
+
 class AddCarView(CreateView):
     model = AddCarModel
     template_name = "AddCar.html"
@@ -269,5 +271,22 @@ class TestView(TemplateView):
         return context
 
 def Basket(request):
-    print(request.GET)
-    return render(request, "basket.html", context={})
+    new_car_price = request.POST.get('new_car_price')
+    session_key = request.POST.get('session_key')
+    new_car_name = request.POST.get('new_car_name')
+    product_id = request.POST.get('product_id')
+    csrfmiddlewaretoken = request.POST.get('csrfmiddlewaretoken')
+
+    return_dict = dict()
+
+    # делаем новый продукт кторый будем сохранять в базу create
+    new_product = BasketModel.objects.create(session_key=session_key) #price=new_car_price
+
+    # считываем количество, которое потом будем отображать в корзине
+    products_total_num = BasketModel.objects.filter(session_key=session_key, is_active=True).count()
+
+    return_dict['products_total_num'] = products_total_num
+    #return_dict['new_product '] = new_product
+
+    print(return_dict)
+    return JsonResponse(return_dict) # request, "basket.html", context={}

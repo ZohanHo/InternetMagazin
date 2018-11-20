@@ -51,6 +51,7 @@
             </div>
         </nav>
 
+
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="display: block;">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
                     aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,14 +90,12 @@
                         <div class="basket-container" style="position: absolute; left: 77%; top: 20%;">
 
                             <a href="{% url "basket_url" %}" style="color: white">
-                            <img id="basket" src="{% static "media/images/cart.png" %}" alt="" title="Basket" class="image-responsive"
-                                     style="width: 13%;">
+                            <img id="basket " src="{% static "media/images/cart.png" %}" alt="" title="Basket" class="image-responsive"
+                                     style="width: 13%;"><span id="span" style="color: sandybrown"></span>
                                 <!-- сласс hidden в 4 бутстрп d-none, по умолчанию скрыто -->
-                                    <div id="basket-item" class="basket-item d-none" style="position: absolute; background-color: #3E434A;
+                                    <div id="basket-item" class="basket-item d-none" style="position: absolute; background-color: #3E434A; /* d-none */
                                                             left: 10px; top: 45px; padding: 15px; width: 300px; z-index: 5;">
-                                        <ul class="basket" >
-
-                                        </ul>
+                                        <ul class="basket" ></ul>
                                 </div>
                             </a>
                         </div>

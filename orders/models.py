@@ -29,7 +29,7 @@ class Order(models.Model):
     date = models.DateTimeField(auto_now_add=True, auto_now=False)
     update = models.DateTimeField(auto_now=True, auto_now_add=False)
     is_active = models.BooleanField(default=True)
-    status = models.ForeignKey(Status, on_delete=True, blank=True)
+    status = models.ForeignKey(Status, blank=True, on_delete=True)
 
 
     def __str__(self):
@@ -86,19 +86,19 @@ post_save.connect(product_in_order_post_save, sender=ProductInOrder)
 
 class BasketModel(models.Model):
 
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True)
+    #product = models.ForeignKey(Product, blank=True, null=True, on_delete=True)
+    #order = models.ForeignKey(Order, blank=True, null=True, on_delete=True)
     session_key = models.CharField(max_length=120, null=True, default=None)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     discription_product = models.TextField(blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True, auto_now=False)
     update = models.DateTimeField(auto_now=True, auto_now_add=False)
     is_active = models.BooleanField(default=True)
-    category = models.ForeignKey(CategoryProduct, on_delete=models.CASCADE, blank=True, null=True)
+    category = models.ForeignKey(CategoryProduct, on_delete=True, blank=True, null=True)
 
 
-    def __str__(self):
-        return "{}".format(self.product)
+    # def __str__(self):
+    #     return "{}".format(self.product)
 
     class Meta:
         verbose_name = "Товар в корзине"
