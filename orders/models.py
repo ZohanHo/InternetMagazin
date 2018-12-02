@@ -86,19 +86,23 @@ post_save.connect(product_in_order_post_save, sender=ProductInOrder)
 
 class BasketModel(models.Model):
 
-    #product = models.ForeignKey(Product, blank=True, null=True, on_delete=True)
+    product_basket = models.ForeignKey(Product, blank=True, null=True, on_delete=True)
+    product_name = models.CharField(max_length=100, null=True, default=None)
     #order = models.ForeignKey(Order, blank=True, null=True, on_delete=True)
-    session_key = models.CharField(max_length=120, null=True, default=None)
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    session_key = models.CharField(max_length=120, null=True)
+    #price = models.DecimalField(max_digits=10, decimal_places=2, default=None)
+    price = models.CharField(max_length=120, null=True, blank=True)
     discription_product = models.TextField(blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True, auto_now=False)
     update = models.DateTimeField(auto_now=True, auto_now_add=False)
     is_active = models.BooleanField(default=True)
     category = models.ForeignKey(CategoryProduct, on_delete=True, blank=True, null=True)
+    number = models.IntegerField()
 
 
-    # def __str__(self):
-    #     return "{}".format(self.product)
+    def __str__(self):
+        return "{}".format(self.product_name)
 
     class Meta:
         verbose_name = "Товар в корзине"

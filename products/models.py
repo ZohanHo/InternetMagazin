@@ -2,6 +2,7 @@ from django.db import models
 from django.shortcuts import reverse
 
 
+
 class CategoryProduct(models.Model):
     name = models.CharField(max_length=30, blank=True)
     is_active = models.BooleanField(default=True)
@@ -17,6 +18,7 @@ class CategoryProduct(models.Model):
 
 class Product(models.Model):
 
+
     product_name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     discription_product = models.TextField(blank=True)
@@ -26,6 +28,7 @@ class Product(models.Model):
     discount = models.IntegerField(default=0, blank=True)
     # on_delete=models.CASCADE - все поля всязаные тоже удалятся или добавятся (тянет в базе всю последовательность)
     category = models.ForeignKey(CategoryProduct, on_delete=True, blank=True, null=True)
+
 
 
 
@@ -43,6 +46,8 @@ class ProductImages(models.Model):
     date = models.DateTimeField(auto_now_add=True, auto_now=False)
     update = models.DateTimeField(auto_now=True, auto_now_add=False)
     is_active = models.BooleanField(default=True)
+
+
 
     def get_absolute_url_product(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
         return reverse("product_detail_url", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,

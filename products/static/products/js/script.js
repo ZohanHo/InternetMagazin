@@ -10,12 +10,10 @@ $(document).ready(function () {   // document селектор - ето вся �
         var new_car_id = form.data("new_car_id"); // помещает в переменную результат
         var new_car_name = form.data("new_car_name");
         var new_car_price = form.data("new_car_price");
+        var number = form.data("number");
         var session_key = form.data("session_key");
-        var new_car_price_int = parseInt(new_car_price);
+        var new_car_price_int = parseInt("new_car_price");
         var num = parseInt(6);
-        var total = new_car_price_int * num;
-
-
 
 
         // AJAX
@@ -30,6 +28,7 @@ $(document).ready(function () {   // document селектор - ето вся �
         data.new_car_name = new_car_name;  // добавил в словарь date  - new_car_id
         data.new_car_price = new_car_price;  // добавил в словарь date  - new_car_id
         data.session_key = session_key;  // добавил в словарь date  - new_car_id
+        data.number = number;  // добавил в словарь date  - new_car_id
         //data.products_total_num = products_total_num;
 
         console.log(data);
@@ -40,54 +39,53 @@ $(document).ready(function () {   // document селектор - ето вся �
             type: 'POST',
             data: data,
             cache: false,
-            success: function (data) {  // Что бля за data и как он до нее достучался ???
+            success: function (data) {  // data - словарь который передаем во views.py jsonresponse в словаре
+
             if (data.products_total_num){
-                $('#span').text("("+ data.products_total_num + ")");
+                $('#span').text("("+ data.products_total_num  +")");
             }
             //console.log(data);
             //css свойство укаали scrollTop() то всегда всерху где бы небыли на странице + 220
-            $('.popup').css({"top":$(window).scrollTop() + 220}).addClass('active');
-            var bg_popup = $('.bg_popup');
-            bg_popup.fadeIn();
-            bg_popup.click(function () {   // удаляем при нажати на на люьом месте кроме окна котрое появилось
-                $('.popup').removeClass('active');
-                bg_popup.fadeOut();
-            });
 
-            $(".basket-item ul").append('<li>' + new_car_name + '$' + new_car_price + ' <a class="delete" href="#">' +
-                'Delete' + '</a>' + '</li>' + '</br>' ); //по клику добавляем елемент, с перемен. + конкатен
+
+            var off = $('#offspring');
+
+            console.log(off);
+
+            function popup() {
+                popup = $('.popup');
+                popup.css({"top": $(window).scrollTop() + 220}).addClass('active');
+                var bg_popup = $('.bg_popup');
+                bg_popup.fadeIn();
+                bg_popup.click(function () {   // удаляем при нажати на на люьом месте кроме окна котрое появилось
+                    $('.popup').removeClass('active');
+                    bg_popup.fadeOut();
+                });
+            }
+
+            popup();
+
+
+            // var basket = $(".basket-item ul").append('<li>' + new_car_name + '$' + new_car_price + ' <a class="delete" href="#">' +
+            //     'Delete' + '</a>' + '</li>' + '</br>' ); //по клику добавляем елемент, с перемен. + конкатен
 
                 console.log('OK - add - ajax');
-
             },
             error: function () {
                 console.log('error');
             }
         });
 
+        form.off()
     });
 
-//
-//
-//     //функция
-//     // function test(a, b) {
-//     //     var too = 2;
-//     //     var res = a + b;
-//     //     document.write(res)
-//     // }
-//     //
-//     // test(5, 5);
-//
-//
+
+
+ //  -------------- hover ------------------
+
     var basket_container = $(".basket-container");
     var basket_item = $(".basket-item");
 
-    // basket_container.on('click', function (e) {
-    //     e.preventDefault();  // отменяет событие
-    //     basket_item.toggleClass("d-none");
-    // });
-
- //  -------------- hover ------------------
 
     basket_container.mouseover(function () { // или клие или наведение
         basket_item.toggleClass("d-none"); //при наведении удаляется временно класс если он есть
@@ -96,9 +94,9 @@ $(document).ready(function () {   // document селектор - ето вся �
     basket_container.mouseout(function () { // или клие или наведение
         basket_item.toggleClass("d-none"); //при наведении удаляется временно класс
     });
-//--------------------------------------------
 
 });
+
 
 
 //-------------------------------------------------- del -----------------------
@@ -232,3 +230,13 @@ $(document).on('click', ".delete",function () {
 //         var total = new_car_price_int * num;
 
     // ------------------------------
+
+
+//     //функция
+//     // function test(a, b) {
+//     //     var too = 2;
+//     //     var res = a + b;
+//     //     document.write(res)
+//     // }
+//     //
+//     // test(5, 5);

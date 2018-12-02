@@ -32,6 +32,16 @@
                         </button>
                      </div>
 
+
+                    <!-- Недоделаные лайки -->
+                    <p>
+                        <a href="{{ i.get_absolute_url_product }}">
+                            <img src="{% static "media/images/like5.png" %}" alt="" class="image-responsive" style="position: absolute; top: 58%; right: 15px;
+                                                                                                        padding-left: 5px; padding-right: 5px; width: 12%">
+                        </a>
+                    </p>
+
+                    <!--Скидка -->
                     {% if i.product_image.discount %}
                         <p style="position: absolute; top: 185px;left: -1px; background-color: green;
                                 color: white; font-weight: 600; padding-left: 5px; padding-right: 5px">Скидка: {{ i.product_image.discount }}%</p>

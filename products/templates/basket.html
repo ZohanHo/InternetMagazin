@@ -3,15 +3,37 @@
 
 {% block basket %}
 
-    <div>
-        <h2>Ваша Корзина - товаров в корзине ? штук</h2>
+    <a style="margin: 1%" href="/">< Вернуться к сайту</a>
 
-        <a href="/">< Вернуться к сайту</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div style="margin: 3%">
+                    <h2 style="color: midnightblue">Ваша Корзина</h2>
 
-        <div style="margin: 2%">
-            <img  id="" src="{% static "media/images/image1.jpg" %}" alt="" title="" class="image-responsive"
-                                     style="width: 50%;">
-        </div>
+                    <h6>У вас {{ count }}  товара(ов) в корзине</h6>
+
+
+                    <br>
+
+                    <h4 style="color: midnightblue">Список товаров:</h4>
+
+                    <div>
+                        {% for i in queryset %}
+                            <div class="card" style="color: #00aced; background-color: lightyellow">
+                                <div class="card-header">
+                                    {{ i.date }}
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Товар: {{ i.product_name }}</h5>
+                                    <h6 class="card-title">Цена:{{ i.price }}</h6>
+                                    <p class="card-text">Количество: {{ i.number }}</p>
+                                    <p class="card-text">Всего: </p>
+                                    <a href="#" class="btn btn-primary">Оплатить</a>
+                                </div>
+                            </div><br>
+                        {% endfor %}
+                    </div>
 
 
         <h4>
@@ -21,14 +43,27 @@
             условие доставки
         </h4>
 
+                    <div>
+                        Общая сумма
+                        <button type="submit" style="" class="btn btn-success">Овормить заказ</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-6">
+                <div style="">
+                    <img id="" src="{% static "media/images/image1.jpg" %}" alt="" title="" class="image-responsive"
+                         style="width: 100%;">
+                </div>
+            </div>
+        </div>
     </div>
 
 
 
-    <div>
-        Общая сумма
-        <button type="submit" style="" class="btn btn-success">Овормить заказ</button>
-    </div>
+
+
+
 
 
 

@@ -42,6 +42,11 @@
                                aria-controls="contact"
                                aria-selected="false">Контакты</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="map-tab" data-toggle="tab" href="#map" role="tab"
+                               aria-controls="map"
+                               aria-selected="false">Карта</a>
+                        </li>
                     </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -51,18 +56,48 @@
                            style="text-align: justify">{{ object.discription_product }}</p>
                         <a href="#" class="btn btn-success" style="width: 30%;"><img
                                 src="{% static "media/images/111.png" %}"
-                                alt="" class="image-responsive" style="width: 12%; margin-bottom: 5px; "> Добавить в
-                            корзину</a>
+                                alt="" class="image-responsive" style="width: 12%; margin-bottom: 5px; ">
+                            Добавить вкорзину
+                        </a>
                     </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">doc</div>
-                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">poc</div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <br><p>Досьавка нашими сотрудниками в указанный Вами абрес в теченни часа после покупки</p>
+                    </div>
+                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                        <br><h5 style="text-align: left">г. Киев, Подол
+                        ул. Корабельная, 4А
+                        </h5><br>
+
+                        <p style="text-align: left">Тел. 044 238-29-10 Ел. пошта: autosalon@nissan-ask.com.ua</p>
+                        <p style="text-align: left">Тел. СТО 044 200-90-92 Ел. пошта: service@nissan-ask.com.u</p>
+
+
+                        <p style="text-align: left">Специалист по роботе с клиентами: cq@nissan-ask.com.ua</p>
+                        <p style="text-align: left">Катерина     0503526555 (Пн - Пт 09:00-18:00)</p>
+
+                        <h5 style="text-align: left">Автосалон</h5><br>
+                        <p style="text-align: left">09:00 – 20:00 Пн - Пт</p>
+                        <p style="text-align: left">10:00 - 20:00 Сб</p>
+                        <p style="text-align: left">10:00 - 19:00 Вс</p>
+
+                        <h5 style="text-align: left">СТО</h5>
+
+                        <p style="text-align: left">08:00 – 21:00 Пн - Вс</p>
+                    </div>
+                    <div class="tab-pane fade" id="map" role="tabpanel" aria-labelledby="profile-tab">
+                        <!-- google maps address -->
+                        <div style="margin: 2%">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2538.779771922492!2d30.49062491573263!3d50.
+                            482443479479834!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4cde30118d163%3A0xa6735a2055b8f146!2zNEE
+                            sINGD0LsuINCa0L7RgNCw0LHQtdC70YzQvdCw0Y8sIDTQkCwg0JrQuNC10LIsIDAyMDAw!5e0!3m2!1sru!2sua!4v1543664460610"
+                                    width="700" height="470" frameborder="0" style="border:0" allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
 
         </div>
-
-
-
 
             {% if request.user.is_authenticated or request.user.is_staff %}
             <div class="card-footer text-muted" style="background-color: #D8D8D8;">
@@ -70,7 +105,5 @@
                 <a href="{{ object.get_abs_del_url }}" class="btn btn-light" style="color: firebrick">Удалить</a>
             </div>
             {% endif %}
-
-
 
 {% endblock %}

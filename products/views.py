@@ -8,7 +8,9 @@ from .forms import *
 from django.urls import reverse_lazy
 import datetime
 from orders.models import *
+from products.models import *
 from django.http import JsonResponse
+from django.shortcuts import resolve_url
 
 
 
@@ -142,23 +144,8 @@ class LandingDetailView(DetailView):
     model = ProductImages
     template_name = "card_detail.html"
 
-
-
     def dispatch(self, request, *args, **kwargs):
-
-        self.session_key = request.session.session_key
-        if not self.session_key:
-            request.session.cycle_key()  # cycle_key - создает ключ вручную если его нету
-
-        print(request.GET.get("product_id"))
-
         return super(LandingDetailView, self).dispatch(request, *args, **kwargs)
-
-
-    def get_context_data(self, **kwargs):
-        context = super(LandingDetailView, self).get_context_data(**kwargs)
-        context ["key"] =  self.session_key
-        return context
 
 
 
@@ -166,6 +153,10 @@ class AddCarView(CreateView):
     model = AddCarModel
     template_name = "AddCar.html"
     fields = ["product_name", "price", "discription_product", "category", "image_product"] #
+
+    # Мметод который возвращает url на который мы редиректим пользователся при успешной валидации формы
+    #def get_success_url(self):
+        #return resolve_url("detail_new_car_url", pk=self.object.pk)
 
 
 class AddDetailView(DetailView):
@@ -271,22 +262,71 @@ class TestView(TemplateView):
         return context
 
 def Basket(request):
+
+    # Через POST можно вытянуть то что передажи в ajax
     new_car_price = request.POST.get('new_car_price')
-    session_key = request.POST.get('session_key')
     new_car_name = request.POST.get('new_car_name')
     product_id = request.POST.get('product_id')
-    csrfmiddlewaretoken = request.POST.get('csrfmiddlewaretoken')
+    session_key = request.POST.get('session_key')
+    #number = BasketModel.objects.get("number")
 
-    return_dict = dict()
+
+    #price = float(new_car_price.split(",")[0])
+
+    #return_dict = dict()
 
     # делаем новый продукт кторый будем сохранять в базу create
-    new_product = BasketModel.objects.create(session_key=session_key) #price=new_car_price
+
+    # new_product = BasketModel.objects.create(session_key=session_key, product_name = new_car_name) #price=new_car_price
+    # num = new_product.number
+
+    # тест
+
+    number = 1
+    new_product, created = BasketModel.objects.update_or_create(session_key=session_key, product_name=new_car_name,
+                                                             defaults={"number": number, "price" : new_car_price})
+
+    # такой конструкцией увиличиваем количество в базе
+    if not created:
+        new_product.number += number
+        new_product.save()
+
+
+
+
+
+    #if new_product:
+        #good = "Product in Basket"
+        #return_dict['good'] = good
+    # для обновления и создания
+    #BasketModel.objects.update_or_create(session_key=session_key, product_name = new_car_name)
+
+    # для проверки есть ли и обновления используется
+    # naw_product, create = BasketModel.objects.get_or_create(session_key=session_key, product_name = new_car_name, defaults{})
+    # если такая запись есть то ничего не делаем, если нету то создаем такую запись + то что в дефолте
+
 
     # считываем количество, которое потом будем отображать в корзине
-    products_total_num = BasketModel.objects.filter(session_key=session_key, is_active=True).count()
+    products_total = BasketModel.objects.filter(session_key=session_key, is_active=True)
+    products_total_num = products_total.count()
+    #num = BasketModel.objects.filter("number")
 
-    return_dict['products_total_num'] = products_total_num
-    #return_dict['new_product '] = new_product
 
-    print(return_dict)
-    return JsonResponse(return_dict) # request, "basket.html", context={}
+
+
+    queryset = BasketModel.objects.all()
+
+
+
+
+    # Поместив в словарь которы передаем в rcdesponse можем потом использовать в data в js
+    #return_dict['products_total_num'] = products_total_num
+
+
+
+    #return_dict['number'] = BasketModel.objects.get("number")
+    #num = BasketModel.objects.filter("number")
+
+
+    return render(request, "basket.html", context={"products_total_num" : products_total_num, "queryset": queryset, "number": number})
+    #return JsonResponse(return_dict)
