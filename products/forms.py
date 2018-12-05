@@ -1,5 +1,6 @@
 from django import forms
 from .models import *
+from orders.models import *
 
 
 class FormSearch(forms.Form):  # Класс Form - принимает данные из запроса(в виде текстовых строк),валидирует относительно типа полей, приводит к нужному представлению на языке питон
@@ -22,4 +23,9 @@ class ContactForm(forms.Form):
 
 
 
+class Basket(forms.ModelForm):
 
+
+    class Meta:
+        model = BasketModel
+        fields = ["number"] #

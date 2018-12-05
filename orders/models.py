@@ -2,6 +2,7 @@ from django.db import models
 from products.models import *
 from django.db.models.signals import post_save
 from products.models import *
+from django.shortcuts import reverse
 
 class Status(models.Model):
 
@@ -108,3 +109,14 @@ class BasketModel(models.Model):
         verbose_name = "Товар в корзине"
         verbose_name_plural = "Товары в корзине"
 
+    def get_absolute_url_basket(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
+        return reverse("del_obj_url", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
+        # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )
+
+    def get_absolute_url_basket_update(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
+        return reverse("change_number_url_update", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
+        # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )
+
+    def get_absolute_url(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
+        return reverse("basket_url", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
+        # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )

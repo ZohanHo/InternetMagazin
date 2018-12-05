@@ -94,16 +94,18 @@
                                      style="width: 13%;"><span id="span" style="color: sandybrown">({{ count }})</span>
                                 <!-- сласс hidden в 4 бутстрп d-none, по умолчанию скрыто -->
                                     <div id="basket-item" class="basket-item d-none" style="position: absolute; background-color: #3E434A; /* d-none */
-                                                            left: 10px; top: 45px; padding: 15px; width: 300px; z-index: 5;">
+                                                            left: 10px; top: 45px; padding: 15px; width: 380px; z-index: 5;">
                                         <ul style="color: #343A40" class="basket">
                                             {% for foo in sesiion_in_basket  %}
-                                                <li style="color: #343A40" id="offspring"><p style="color: white">{{ foo.product_name }}</p></li>
+                                                <li style="color: #343A40" id="offspring"><p style="color: white">{{ foo.product_name }} ({{ foo.number }}шт.)
+                                                    <a href="{{ foo.get_absolute_url_basket }}">Delete</a></p></li>
                                             {% endfor %}
                                         </ul>
                                 </div>
                             </a>
-                        </div>
 
+
+                        </div>
                     </li>
                 </ul>
 
@@ -134,6 +136,8 @@
             {% block pagination %}{% endblock %}
 
             {% block basket %}{% endblock %}
+
+            {% block ordering %}{% endblock %}
 
             {% include "pagination.html" %}
 

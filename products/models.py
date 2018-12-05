@@ -78,7 +78,7 @@ class AddCarModel(models.Model):
 
     # url для tag_update_url
     def get_abs_update_url(self):  #
-        return reverse("update_car_url", kwargs={"pk": self.pk})
+        return reverse("change_number_url_update", kwargs={"pk": self.pk})
 
     # url для post_del_url
     def get_abs_del_url(self):  #

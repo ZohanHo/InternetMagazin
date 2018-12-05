@@ -66,8 +66,8 @@ $(document).ready(function () {   // document селектор - ето вся �
             popup();
 
 
-            // var basket = $(".basket-item ul").append('<li>' + new_car_name + '$' + new_car_price + ' <a class="delete" href="#">' +
-            //     'Delete' + '</a>' + '</li>' + '</br>' ); //по клику добавляем елемент, с перемен. + конкатен
+            $(".basket-item ul").append('<li>' + new_car_name + '$' + new_car_price + ' <a class="delete" href="#">' +
+                'Delete' + '</a>' + '</li>' + '</br>' ); //по клику добавляем елемент, с перемен. + конкатен
 
                 console.log('OK - add - ajax');
             },

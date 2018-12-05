@@ -11,5 +11,6 @@ def user_profile(requsest):  # можно добавить в любой апл�
         sesiion_in_basket = BasketModel.objects.filter(session_key=session_key, is_active=True) # кверисет
         count = sesiion_in_basket.count() # количество кверисетов
 
+
         return locals()
 

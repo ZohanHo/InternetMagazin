@@ -15,10 +15,13 @@
 
 
                     <br>
+                    {% if queryset %}
+                        <h4 style="color: midnightblue">Список товаров:</h4>
+                    {% endif %}
 
-                    <h4 style="color: midnightblue">Список товаров:</h4>
 
                     <div>
+
                         {% for i in queryset %}
                             <div class="card" style="color: #00aced; background-color: lightyellow">
                                 <div class="card-header">
@@ -26,27 +29,29 @@
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">Товар: {{ i.product_name }}</h5>
-                                    <h6 class="card-title">Цена:{{ i.price }}</h6>
-                                    <p class="card-text">Количество: {{ i.number }}</p>
+                                    <h6 class="card-title">Цена: {{ i.price }}</h6>
+                                    <form action="{{ i.get_absolute_url_basket_update }}" method="post" >{% csrf_token %}
+                                        <p class="card-text">Количество: <input title="Введите количество" type="number" size="99" name="num" min="1" max="99"
+                                        value="{{ i.number }}"> <button type="submit" class="btn btn-primary btn-sm">Save<a href=""></a></button></p>
+
+                                    </form>
+
                                     <p class="card-text">Всего: </p>
                                     <a href="#" class="btn btn-primary">Оплатить</a>
+                                    <a href="{{ i.get_absolute_url_basket }}" class="btn btn-danger">Удалить</a>
                                 </div>
                             </div><br>
                         {% endfor %}
+
                     </div>
+                    <br>
 
 
-        <h4>
-            Карточка товара
-            количество
-            цена
-            условие доставки
-        </h4>
-
-                    <div>
-                        Общая сумма
-                        <button type="submit" style="" class="btn btn-success">Овормить заказ</button>
-                    </div>
+                    {% if queryset %}
+                        <div>
+                            <a href="{% url "ordering_url" %}" class="btn btn-success">Оформить заказ</a>
+                        </div>
+                    {% endif %}
                 </div>
 
             </div>

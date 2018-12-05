@@ -282,16 +282,33 @@ def Basket(request):
 
     # тест
 
+
+
+
+    session = request.session.session_key
+
+
+
     number = 1
-    new_product, created = BasketModel.objects.update_or_create(session_key=session_key, product_name=new_car_name,
-                                                             defaults={"number": number, "price" : new_car_price})
+    if session == session_key:
+        new_product, created = BasketModel.objects.get_or_create(session_key=session_key, product_name=new_car_name, price=new_car_price,
+                                                                            defaults={"number": number})
 
     # такой конструкцией увиличиваем количество в базе
-    if not created:
-        new_product.number += number
-        new_product.save()
+
+        if not created:
+            new_product.number += number
+            new_product.save(force_update=True)
 
 
+
+    """
+    Принудительное выполнение INSERT или UPDATE
+    В редких случаях, может понадобиться принудительно заставить метод save() выполнить INSERT запрос вместо UPDATE.
+    Или наоборот: обновить, при возможности, но не добавлять новую запись. 
+    В этом случае вы можете указать аргумент force_insert=True или force_update=True для метода save(). 
+    Очевидно, не правильно использовать оба аргумента вместе: вы не можете добавлять и обновлять одновременно!
+    """
 
 
 
@@ -318,7 +335,6 @@ def Basket(request):
 
 
 
-
     # Поместив в словарь которы передаем в rcdesponse можем потом использовать в data в js
     #return_dict['products_total_num'] = products_total_num
 
@@ -330,3 +346,22 @@ def Basket(request):
 
     return render(request, "basket.html", context={"products_total_num" : products_total_num, "queryset": queryset, "number": number})
     #return JsonResponse(return_dict)
+
+
+def del_obj(request, pk):
+    model = BasketModel.objects.get(pk__iexact=pk)
+    model.delete()
+    return redirect(reverse("basket_url"))  # куда вернет после удаления
+
+
+def ordering(request):
+    return render(request, "ordering.html",locals())
+
+
+def change_number(request, pk):
+    model = BasketModel.objects.get(pk__iexact=pk)
+    model.number = request.POST.get("num")
+    model.save()
+
+    return redirect(reverse("basket_url"))
+
