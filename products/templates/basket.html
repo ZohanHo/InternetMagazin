@@ -33,9 +33,7 @@
                                     <form action="{{ i.get_absolute_url_basket_update }}" method="post" >{% csrf_token %}
                                         <p class="card-text">Количество: <input title="Введите количество" type="number" size="99" name="num" min="1" max="99"
                                         value="{{ i.number }}"> <button type="submit" class="btn btn-primary btn-sm">Save<a href=""></a></button></p>
-
                                     </form>
-
                                     <p class="card-text">Всего: </p>
                                     <a href="#" class="btn btn-primary">Оплатить</a>
                                     <a href="{{ i.get_absolute_url_basket }}" class="btn btn-danger">Удалить</a>

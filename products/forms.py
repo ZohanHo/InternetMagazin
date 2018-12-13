@@ -29,3 +29,10 @@ class Basket(forms.ModelForm):
     class Meta:
         model = BasketModel
         fields = ["number"] #
+
+class Likes(forms.ModelForm):
+
+
+    class Meta:
+        model = Product
+        fields = ["likes"] #

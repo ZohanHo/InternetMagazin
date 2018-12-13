@@ -11,8 +11,9 @@ from orders.models import *
 from products.models import *
 from django.http import JsonResponse
 from django.shortcuts import resolve_url
-
-
+from django.shortcuts import get_object_or_404
+from django.http import Http404
+from django.core.exceptions import ObjectDoesNotExist
 
 class ListViewLanding(ListView):
     model = ProductImages
@@ -22,6 +23,7 @@ class ListViewLanding(ListView):
     def dispatch(self, request, *args, **kwargs):  # dispath определяет с каким запросом к нам прилетел запрос
         # Создаем переменную в которую кладем весь масив request.GET, а именно даннные которые пришли от пользователя в строке запроса,
         # будем с request.GET брать наш search и sort
+        self.form_likes = Likes(request.POST or None)
         self.form = FormSearch(request.GET)
         # метод проверяет соответствуют ли данные той форме которую мы прописали, после чего можем оперировать таким атрибутом как cleaned_data
         self.form.is_valid()
@@ -69,6 +71,8 @@ class ListViewLanding(ListView):
         context["is_paginated"] = is_paginated
         context["prev_url"] = prev_url
         context["next_url"] = next_url
+        context["form_likes"] = self.form_likes
+
         return context
 
 class ListViewLandingAuto(ListView):
@@ -291,6 +295,7 @@ def Basket(request):
 
     number = 1
     if session == session_key:
+        # session_key= (красным ето поле нашего обьекта) после равно пишем то что туда записываем !!!
         new_product, created = BasketModel.objects.get_or_create(session_key=session_key, product_name=new_car_name, price=new_car_price,
                                                                             defaults={"number": number})
 
@@ -349,19 +354,76 @@ def Basket(request):
 
 
 def del_obj(request, pk):
-    model = BasketModel.objects.get(pk__iexact=pk)
-    model.delete()
+    object = BasketModel.objects.get(pk__iexact=pk)
+    object.delete()
+
     return redirect(reverse("basket_url"))  # куда вернет после удаления
 
 
 def ordering(request):
+
     return render(request, "ordering.html",locals())
 
 
 def change_number(request, pk):
-    model = BasketModel.objects.get(pk__iexact=pk)
-    model.number = request.POST.get("num")
-    model.save()
+    # __iexact не чуствительное к регистру точное совпадение !!!
+    object = BasketModel.objects.get(pk__iexact=pk) #
 
+    # Метод get возврвщвет один обьект, а метод filter возвращает queryset !!!
+    object.number = request.POST.get("num")
+    object.save()
     return redirect(reverse("basket_url"))
 
+
+def likes(request, pk):
+
+    # для создания лайков необходимо содать в моделе поле    likedone = models.ManyToManyField(User, null=True,  default=True, related_name='users_video_main')
+    # так доступны все пользователи которые есть
+    if request.user.is_authenticated: # проверяем авторизирован ли пользователь
+        user_tags = User.objects.filter(users_video_main=pk) # возвращает кверисет где проверям .... уточнить
+        current_user = request.user # текущий user
+        if current_user not in user_tags: # проверка что бы текущий юзер не находился в моделе продукта, и если нет то
+            try:
+                object = Product.objects.get(pk=pk) # берем конкретную модель которой будем ставить лайк
+                object.likes += 1 # добавляем лайк
+                object.likedone.add(current_user) # добавляем юзера что он дал лайк
+                object.save() # сохраняем
+                return redirect(reverse("landing"))
+            except ObjectDoesNotExist:
+                return redirect(reverse("landing"))
+        # else:
+        #     return redirect(reverse("landing"))
+
+        if current_user in user_tags: # проверка что бы текущий юзер не находился в моделе продукта, и если нет то
+            try:
+                object = Product.objects.get(pk=pk) # берем конкретную модель которой будем ставить лайк
+                object.likes -= 1 # добавляем лайк
+                object.likedone.remove(current_user) # добавляем юзера что он дал лайк
+                object.save() # сохраняем
+                return redirect(reverse("landing"))
+            except ObjectDoesNotExist:
+                return redirect(reverse("landing"))
+        else:
+            return redirect(reverse("landing"))
+    else:
+        return redirect(reverse("landing"))
+
+
+def add_product_base(request, pk):
+    session = request.session.session_key
+    number=1
+    object = Product.objects.get(pk=pk)
+    obj, created = BasketModel.objects.get_or_create(session_key=session, product_name=object.product_name, price=object.price, defaults={"number": number})
+
+    if not created:
+        BasketModel.number += number
+        object.save(force_update=True)
+
+    print(obj)
+    print(object.price)
+    print(object.product_name)
+
+
+    print(request.POST)
+    print(pk)
+    return redirect(reverse("landing"))

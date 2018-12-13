@@ -1,5 +1,7 @@
 from django.db import models
+from orders.models import *
 from django.shortcuts import reverse
+from django.contrib.auth.models import User
 
 
 
@@ -18,7 +20,6 @@ class CategoryProduct(models.Model):
 
 class Product(models.Model):
 
-
     product_name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     discription_product = models.TextField(blank=True)
@@ -28,8 +29,13 @@ class Product(models.Model):
     discount = models.IntegerField(default=0, blank=True)
     # on_delete=models.CASCADE - все поля всязаные тоже удалятся или добавятся (тянет в базе всю последовательность)
     category = models.ForeignKey(CategoryProduct, on_delete=True, blank=True, null=True)
+    #basket = models.ForeignKey(BasketModel, on_delete=True, blank=True, null=True)
 
-
+    #добавить user в админку
+    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, default=True, null=True) # Также необходимо импортировать - from django.contrib.auth.models import User
+    #basket = models.ForeignKey(BasketModel, on_delete=models.CASCADE, blank=False, default=True, null=True) # Также необходимо импортировать - from django.contrib.auth.models import User
+    likes = models.IntegerField(default=0, blank=True, null=True)
+    likedone = models.ManyToManyField(User, null=False, blank=True, related_name='users_video_main')
 
 
     def __str__(self):
@@ -38,6 +44,15 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
+
+    def get_absolute_url_likes(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
+        return reverse("likes_url", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
+        # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )
+
+    def get_absolute_url_test(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
+        return reverse("add_product_base_url", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
+        # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )
+
 
 
 class ProductImages(models.Model):
@@ -84,4 +99,6 @@ class AddCarModel(models.Model):
     def get_abs_del_url(self):  #
         return reverse("delete_car_url", kwargs={"pk": self.pk})
 
-
+    def get_abs_url(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
+        return reverse("test", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
+        # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )

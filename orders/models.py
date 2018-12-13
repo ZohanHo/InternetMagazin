@@ -87,7 +87,7 @@ post_save.connect(product_in_order_post_save, sender=ProductInOrder)
 
 class BasketModel(models.Model):
 
-    product_basket = models.ForeignKey(Product, blank=True, null=True, on_delete=True)
+    product_basket = models.ForeignKey(Product, blank=True, null=True, on_delete=True, related_name="basket")
     product_name = models.CharField(max_length=100, null=True, default=None)
     #order = models.ForeignKey(Order, blank=True, null=True, on_delete=True)
 
@@ -109,14 +109,21 @@ class BasketModel(models.Model):
         verbose_name = "Товар в корзине"
         verbose_name_plural = "Товары в корзине"
 
+
+    # {% url 'basket_url' pk=object.pk %} - можно так
+    def get_absolute_url(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
+        return reverse("basket_url", kwargs={"pk": self.pk})  # revers - генерирует нам ссылку
+        # в словарь в качестве ключа получает поле, то поле по которому мы проводим идентификацию обьекта,
+        # в качестве ключа получаем self.pk или self.slug конкретного обьекта
+
+
     def get_absolute_url_basket(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
         return reverse("del_obj_url", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
         # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )
 
     def get_absolute_url_basket_update(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
-        return reverse("change_number_url_update", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
+        return reverse("add_product_base_url", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
         # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )
 
-    def get_absolute_url(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
-        return reverse("basket_url", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
-        # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )
+
+

@@ -31,4 +31,6 @@ urlpatterns = [
     path('basket/<pk>/', del_obj,  name="del_obj_url"),
     path('ordering', ordering,  name="ordering_url"),
     path('change/<pk>/', change_number, name="change_number_url_update"),
+    path('likes/<pk>/', likes,  name="likes_url"),
+    path('add_product_base/<pk>/', add_product_base,  name="add_product_base_url"),
 ]
