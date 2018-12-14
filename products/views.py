@@ -418,12 +418,8 @@ def add_product_base(request, pk):
     number = 1
     object = Product.objects.get(pk=pk)
 
-
-
-
     obj, created = BasketModel.objects.get_or_create(session_key=session, product_name=object.product_name,
-                                                    price=object.price, defaults={"number": number})
-
+                                                price=object.price, defaults={"number": number})
 
     if not created:
         obj.number += number

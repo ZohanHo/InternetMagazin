@@ -98,7 +98,8 @@
 
                 {% if request.user.is_authenticated or request.user.is_staff %}
                     <div style="" >
-                        <form id="csrf_form" action="{% url "basket_url" %}" method="post"  class=""
+                        <!-- отрабатывает акшин который и на лендинговой странице вьюха -(add_product_base) -->
+                        <form id="csrf_form" action="{{ object.product_image.get_absolute_url_base  }}" method="post"  class=""
                                 data-new_car_id = "{{ object.id }}"
                                 data-new_car_name = "{{ object.product_image.product_name }}"
                                 data-new_car_price = "{{ object.product_image.price }}"

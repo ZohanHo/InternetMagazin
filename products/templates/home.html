@@ -3,6 +3,7 @@
 
 
 {% block under %}
+
         <!-- The website is under cons  truction -->
         <div style="text-align: center;">
             <img src="{% static 'media/images/under-construction.png' %}" alt="Сайт в разработке">
@@ -25,7 +26,10 @@
                         <h5>{{ i.product_image.product_name }}</h5>
                            $ {{ i.product_image.price }}
                     </div>
-                     <div style="position: absolute; top: 289px; left: 45px; right: 45px;">
+
+                    <!-- Добавить в корзину с главной страницы -->
+                    {% if request.user.is_authenticated or request.user.is_staff %}
+                    <div style="position: absolute; top: 289px; left: 45px; right: 45px;">
                          <form action="{{ i.product_image.get_absolute_url_base  }}" method="post">{% csrf_token %}
                              <button  class="btn btn-success" type="submit" >
                                     <img src="{% static "media/images/111.png" %}"
@@ -34,16 +38,19 @@
                             </button>
                          </form>
                      </div>
+                    {% else %}
+                        <div  style="position: absolute; top: 289px; left: 45px; right: 45px;">
+                            <a href="/accounts/login" class="btn btn-success registrations">
+                                    <img src="{% static "media/images/111.png" %}"
+                                            alt="" class="image-responsive" style="width: 10%; margin-bottom: 3px;">
+                                    Дбавить в корзину
+                            </a>
+                        </div>
+                    {% endif %}
 
-
-                    <!-- Недоделаные лайки -->
+                    <!-- Лайки -->
                     <a href="{{ i.product_image.get_absolute_url_likes }} "><img src="{% static "media/images/like5.png" %}"  alt="" class="image-responsive" style="position: absolute; top: 58%; right: 19px;
                                                                                                             padding-left: 5px; padding-right: 5px; width: 12%"></a>
-
-
-
-
-
                     <p style="position: absolute; top: 60%;right: -1px;
                                 color: white; font-weight: 500; padding-left: 5px; padding-right: 5px">{{ i.product_image.likes }}</p>
 
@@ -57,6 +64,48 @@
             {% endfor %}
         </div>
 
+        <!-- Скрипт popup in landing -->
+                    <script>
+                        $(document).ready(function () {   // document селектор - ето вся страница целиком, ready метод (событие)
+
+                            var registrations = $('.registrations');
+
+                            data = {}; // data ето то что мы отправляем, название, цена
+                            var url = "/accounts/login/";
+
+                            registrations.on('click', function (event) {
+                                event.preventDefault();
+
+                                $.ajax({
+                                    url: url,
+                                    type: 'get',
+                                    data: data,
+                                    cache: false,
+                                    success: function () {
+
+                                        function popup() {
+                                            popup = $('.popup');
+                                            popup.css({"top": $(window).scrollTop() + 220}).addClass('active');
+                                            var bg_popup = $('.bg_popup');
+                                            bg_popup.fadeIn();
+                                            bg_popup.click(function () {   // удаляем при нажати на на люьом месте кроме окна котрое появилось
+                                                $('.popup').removeClass('active');
+                                                bg_popup.fadeOut();
+                                            });
+                                        }
+
+                                        popup();
+
+                                        console.log('OK - del - ajax');
+
+                                    },
+                                    error: function () {
+                                        console.log('error');
+                                    }
+                                });
+                            });
+                        });
+                    </script>
 
 {% endblock %}
 
@@ -135,5 +184,18 @@
                     </div>
                 </div>
             </div>
+
+
+            <!-- всплываюшее окно - popup дендинговой страницы  -->
+        <div class="popup" style="height: 116px; width: 500px; background-color: goldenrod; font-family: 'Arial Black'; font-size: larger ">
+            <h5 style=" text-align: center">Для заказа необходима регистрация</h5>
+            <div style="text-align: center; padding: 2%" class="card-footer" id="hiden">
+                <a style="background-color: brown" href="/accounts/login" class="btn btn-secondary">Зарегистрироватся</a>
+                <a style="background-color: brown" href="{{ object.get_absolute_url }}" class="btn btn-secondary">Вернуться к сайту</a>
+            </div>
+
+
+        </div>
+        <div class="bg_popup" style=""></div>
 
 {% endblock %}
