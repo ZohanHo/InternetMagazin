@@ -362,16 +362,20 @@ def del_obj(request, pk):
 
 def ordering(request):
 
-    return render(request, "ordering.html",locals())
+    return render(request, "ordering.html", locals())
 
 
 def change_number(request, pk):
     # __iexact не чуствительное к регистру точное совпадение !!!
-    object = BasketModel.objects.get(pk__iexact=pk) #
+    objecti = BasketModel.objects.get(pk__iexact=pk) #
 
+
+    #print(request.POST)
     # Метод get возврвщвет один обьект, а метод filter возвращает queryset !!!
-    object.number = request.POST.get("num")
-    object.save()
+    objecti.number = request.POST.get("num")
+    #print(request.POST.get("num"))
+    #print(object.number)
+    objecti.save()
     return redirect(reverse("basket_url"))
 
 
@@ -384,7 +388,7 @@ def likes(request, pk):
         current_user = request.user # текущий user
         if current_user not in user_tags: # проверка что бы текущий юзер не находился в моделе продукта, и если нет то
             try:
-                object = Product.objects.get(pk=pk) # берем конкретную модель которой будем ставить лайк
+                object = Product.objects.get(pk__iexact=pk) # берем конкретную модель которой будем ставить лайк
                 object.likes += 1 # добавляем лайк
                 object.likedone.add(current_user) # добавляем юзера что он дал лайк
                 object.save() # сохраняем
@@ -411,19 +415,18 @@ def likes(request, pk):
 
 def add_product_base(request, pk):
     session = request.session.session_key
-    number=1
+    number = 1
     object = Product.objects.get(pk=pk)
-    obj, created = BasketModel.objects.get_or_create(session_key=session, product_name=object.product_name, price=object.price, defaults={"number": number})
+
+
+
+
+    obj, created = BasketModel.objects.get_or_create(session_key=session, product_name=object.product_name,
+                                                    price=object.price, defaults={"number": number})
+
 
     if not created:
-        BasketModel.number += number
-        object.save(force_update=True)
+        obj.number += number
+        obj.save(force_update=True)
 
-    print(obj)
-    print(object.price)
-    print(object.product_name)
-
-
-    print(request.POST)
-    print(pk)
     return redirect(reverse("landing"))

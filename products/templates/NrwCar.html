@@ -101,7 +101,7 @@
 
             {% if request.user.is_authenticated or request.user.is_staff %}
             <div class="card-footer text-muted" style="background-color: #D8D8D8;">
-                <a  href="{{ object.get_abs_update_url }}" class="btn btn-light" style="color: forestgreen; margin-left: 23%">Редактировать</a>
+                <a  href="{{ object.get_abs_update_car_url }}" class="btn btn-light" style="color: forestgreen; margin-left: 23%">Редактировать</a>
                 <a href="{{ object.get_abs_del_url }}" class="btn btn-light" style="color: firebrick">Удалить</a>
             </div>
             {% endif %}

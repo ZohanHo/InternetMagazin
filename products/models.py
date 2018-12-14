@@ -35,7 +35,7 @@ class Product(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, default=True, null=True) # Также необходимо импортировать - from django.contrib.auth.models import User
     #basket = models.ForeignKey(BasketModel, on_delete=models.CASCADE, blank=False, default=True, null=True) # Также необходимо импортировать - from django.contrib.auth.models import User
     likes = models.IntegerField(default=0, blank=True, null=True)
-    likedone = models.ManyToManyField(User, null=False, blank=True, related_name='users_video_main')
+    likedone = models.ManyToManyField(User, blank=True, related_name='users_video_main')
 
 
     def __str__(self):
@@ -45,11 +45,13 @@ class Product(models.Model):
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
 
+    # лайки
     def get_absolute_url_likes(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
         return reverse("likes_url", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
         # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )
 
-    def get_absolute_url_test(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
+    # Добавление продукта с лендинговой страницы в корзину
+    def get_absolute_url_base(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
         return reverse("add_product_base_url", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
         # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )
 
@@ -63,7 +65,7 @@ class ProductImages(models.Model):
     is_active = models.BooleanField(default=True)
 
 
-
+    # Деталка продукта основного
     def get_absolute_url_product(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
         return reverse("product_detail_url", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
         # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )
@@ -87,18 +89,20 @@ class AddCarModel(models.Model):
         verbose_name = "Автомобиль"
         verbose_name_plural = "Автомобили"
 
+
+    # деталка частных автомобилей
     def get_absolute_url(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
         return reverse("detail_new_car_url", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
         # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )
 
-    # url для tag_update_url
-    def get_abs_update_url(self):  #
-        return reverse("change_number_url_update", kwargs={"pk": self.pk})
+    #  редактирование обьявления о продаже
+    def get_abs_update_car_url(self):  # Редактироварие частного обьявлений
+        return reverse("update_car_url", kwargs={"pk": self.pk})
 
-    # url для post_del_url
-    def get_abs_del_url(self):  #
+    # удаление обьявления о продаже
+    def get_abs_del_url(self):  # Удаление из корзины
         return reverse("delete_car_url", kwargs={"pk": self.pk})
 
-    def get_abs_url(self):  # метод который возвращает ссылку на конкретный обьет класса, передаем url шаблона и словарь
-        return reverse("test", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
-        # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )
+    # url для tag_update_url
+    def get_abs_update_num_url(self):  # Редактирование количкства в корзине
+        return reverse("change_number_url_update", kwargs={"pk": self.pk})

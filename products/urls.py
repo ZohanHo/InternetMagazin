@@ -26,7 +26,6 @@ urlpatterns = [
     path('add/<pk>/', AddDetailView.as_view(), name="detail_new_car_url"),
     path('add/<pk>/update/', CarUpdateViwe.as_view(),  name="update_car_url"),
     path('add/<pk>/delete/', CarDeleteView.as_view(), name="delete_car_url"),
-    path('date/', TestView.as_view(),  name="test_view_url"),
     path('basket/', Basket,  name="basket_url"),
     path('basket/<pk>/', del_obj,  name="del_obj_url"),
     path('ordering', ordering,  name="ordering_url"),
