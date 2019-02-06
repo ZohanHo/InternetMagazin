@@ -171,6 +171,9 @@ div {
     background-color: #3c3d41;
     color: white;
     padding-top: 30px;
+
+
+
 }
 
 #myFooter .footer-copyright {
@@ -278,11 +281,15 @@ div {
 .content{
    flex: 1 0 auto;
    -webkit-flex: 1 0 auto;
-   min-height: 500px;
+   min-height: 150px;
 }
 
+
+
+
 #myFooter{
-   flex: 0 0 auto;
+
+    flex: 0 0 auto;
    -webkit-flex: 0 0 auto;
 }
 
@@ -403,6 +410,7 @@ div {
     background-color: gainsboro
 }
 
+
 /* Всплывающее окно */
 
 .popup {
@@ -410,14 +418,14 @@ div {
     height: 380px;
     background: #D8D8D8;
     z-index: 100;
-    padding: 23px 0 0 27px;
+    padding: 23px 0 0 0;
     position: absolute; top: 25%;
     left: 0;
     right: 0;
     margin: auto;
     display: none;
     /*@include transform(translate(-1000px)); !* вылазит сбоку *!*/
-    /*@include transition(.4s)*/
+    /*@inclue transition(.4s)*/
 }
 
 .popup.active{
