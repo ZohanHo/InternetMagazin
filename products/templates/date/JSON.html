@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON</title>
+</head>
+<body>
+
+    <script>
+
+        var xfactor;
+
+        xfactor = {
+            "name": "Zohan",
+            "age": 37,
+            'phone': ['380665502911', '0482348923', {'skype': 'funky'}],
+            'game': {
+                "bdo": 61,
+                'hots': 717,
+                'batle': '39 lvl'
+            }
+        };
+
+        console.log(xfactor);  // получили обьект
+        //Json - JavaScripts object notation (представления джава скрипт обьекта в формате джйсон   )
+
+        var myjson = JSON.stringify(xfactor); // stringify - превращает джаваскрипт обьект в джейсон !!!
+        console.log(myjson);
+
+        var parse = JSON.parse(myjson); // парсит(разбирает) джейсон строку
+         console.log(parse);
+
+        document.write(parse.game.batle + '\n');  // выведем данные в браузер, к джейсону можно обращатся через точечну нотацию
+        document.write(parse.phone[2].skype); // выведем данные в браузер, к джейсону можно обращатся через точечну нотацию или списковый слайсы
+
+
+    </script>
+
+</body>
+</html>

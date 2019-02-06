@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from .views import *
+from .templates.test.views_new import test
 
 urlpatterns = [
     path('', ListViewLanding.as_view(), name = "landing"),
@@ -32,4 +33,7 @@ urlpatterns = [
     path('change/<pk>/', change_number, name="change_number_url_update"),
     path('likes/<pk>/', likes,  name="likes_url"),
     path('add_product_base/<pk>/', add_product_base,  name="add_product_base_url"),
+    path('test/', test, name="test"),
+    path('portfolio/', Portfolio, name="portfolio"),
+
 ]

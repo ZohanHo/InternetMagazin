@@ -201,7 +201,7 @@ class ListViewNewAuto(ListView):
         if self.form.cleaned_data.get("sort"):  #
             queryset = querys.order_by(self.form.cleaned_data["sort"])
 
-        paginator = Paginator(queryset, 12)  # сортируем по 3 обьекта в queryset
+        paginator = Paginator(queryset, 3)  # сортируем по 12 обьекта в queryset
 
         page_number = self.request.GET.get("page")
         page = paginator.get_page(page_number)
@@ -226,6 +226,8 @@ class ListViewNewAuto(ListView):
         context["is_paginated"] = is_paginated
         context["prev_url"] = prev_url
         context["next_url"] = next_url
+        context["querys"] = querys
+
 
         return context
 
@@ -426,3 +428,7 @@ def add_product_base(request, pk):
         obj.save(force_update=True)
 
     return redirect(reverse("landing"))
+
+
+def Portfolio(request):
+    return render(request, "portfolio.html", context={})

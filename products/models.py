@@ -55,10 +55,22 @@ class Product(models.Model):
         return reverse("add_product_base_url", kwargs={"pk": self.pk})  # в словарь в качестве ключа получает поле,
         # то поле по которому мы проводим идентификацию обьекта и self.slug (поле конкретно обьекта )
 
+    def get_filters_lol(self):
+        res =  {}
+        category = self.category.name
+        for foo in Product.objects.filter(product_name=self):
+
+            name = foo.category.name
+
+            # select = []
+            # # for s in foo.:
+            # #     select.append(s.product_name)
+            # # res.update({name:select})
+        return res
 
 
 class ProductImages(models.Model):
-    image_product = models.ImageField(upload_to="")
+    image_product = models.ImageField(upload_to='', default='')
     product_image = models.ForeignKey(Product, related_name="images", on_delete=True, blank=True)
     date = models.DateTimeField(auto_now_add=True, auto_now=False)
     update = models.DateTimeField(auto_now=True, auto_now_add=False)
@@ -84,6 +96,7 @@ class AddCarModel(models.Model):
     is_active = models.BooleanField(default=True)
     category = models.ForeignKey(CategoryProduct, on_delete=True, blank=True, null=True)
     image_product = models.ImageField(upload_to = "image_new_car/", blank=True)
+
 
     class Meta:
         verbose_name = "Автомобиль"

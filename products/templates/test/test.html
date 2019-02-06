@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <!-- jquery 2.2.0 -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.5/angular-animate.js"></script>
+</head>
+<body>
+
+    <div>
+        <label>Name:</label>
+        <input type="text" name="name" ng-model="val" placeholder="enter">
+        <h1>hello {{ val }}</h1>
+    </div>
+
+
+<div id="get">
+1
+</div>
+
+<script>
+    var name = "zorro";
+    $.get("products/templates/test/views_new.py", {name:name}, function (date) {
+
+        $("#get").html(date);
+        console.log(date)
+    }, 'json');
+
+
+</script>
+
+
+</body>
+</html>

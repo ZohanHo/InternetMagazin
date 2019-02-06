@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>XML</title>
+</head>
+<body>
+
+    <script>
+
+        var xmlStr = '<?xml version="1.0" encoding="UTF-8"?>' +
+            '<books>' +
+                '<book>' +
+                    '<name>Дмитрий Рус</name>' +
+                    '<title>Играть чтобы жить</title>' +
+                    '<type firstMmo="Lineage">ММОРПГ</type>' +
+                '</book>' +
+            '</books>';
+
+        console.log([xmlStr]);
+
+        var parser = new DOMParser(); // Встроеный обьект DOMParser, для парсинга
+        var DocumentXML = parser.parseFromString(xmlStr, 'text/xml'); // У обьектта DOMParser есть метод parseFromString для парсинга строки,
+                                                                    // 2 параметра, какой документ и тип документа
+
+        console.log(DocumentXML);
+
+        var dima = DocumentXML.getElementsByTagName("title")[0].childNodes[0].nodeValue; // Значение нода
+        console.log(dima);
+         document.write(dima)
+    </script>
+
+
+</body>
+</html>

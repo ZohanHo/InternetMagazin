@@ -1,0 +1,9 @@
+{
+  "players":
+  [
+    {"lastname" : "zohan", "firstname" : "serduk", "klikuha": "Matherfacker", "age": 27},
+    {"lastname" : "ninja", "firstname" : "basket", "klikuha": "Yo", "age": 35},
+    {"lastname" : "bool", "firstname" : "vasia", "klikuha": "Gendzi", "age": 47},
+    {"lastname" : "petya", "firstname" : "pupkin", "klikuha": "Порох", "age": 55}
+  ]
+}

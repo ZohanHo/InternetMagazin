@@ -52,7 +52,23 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.twitter',
     'allauth.socialaccount.providers.odnoklassniki',
     'allauth.socialaccount.providers.instagram',
+
+
+    'django_elasticsearch_dsl',
+    'django_elasticsearch_dsl_drf',
+
+    'articles',
+
+    'rest_framework',
+
 ]
+
+# Нужно предоставить Django информацию о том, где находится сервер elasticsearch.
+ELASTICSEARCH_DSL= {
+    'default' : {
+        'hosts' : 'localhost:9200'
+    },
+}
 
 
 # для регистрации и соцсетей

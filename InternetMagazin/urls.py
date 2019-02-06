@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
-
+#from search import views as search_views
 
 
 urlpatterns = [
@@ -26,6 +26,9 @@ urlpatterns = [
     path('', include("products.urls"), name="products"),
 
     re_path(r'^accounts/', include('allauth.urls')),
+
+    #path('search/',search_views.search, name="search"),7kl0
+    path('articles/', include('articles.urls')),
 
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
