@@ -54,13 +54,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.instagram',
 
 
-    'django_elasticsearch_dsl',
-    'django_elasticsearch_dsl_drf',
-
-    'articles',
-
-    'rest_framework',
-
 ]
 
 # Нужно предоставить Django информацию о том, где находится сервер elasticsearch.
