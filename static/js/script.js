@@ -284,3 +284,46 @@ $(document).on('click', ".delete",function () {
 //     // }
 //     //
 //     // test(5, 5);
+
+
+
+//popup
+$(document).ready(function () {   // document селектор - ето вся страница целиком, ready метод (событие)
+
+    var registrations = $('.registrations');
+
+    data = {}; // data ето то что мы отправляем, название, цена
+    var url = "/accounts/login/";
+
+    registrations.on('click', function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: url,
+            type: 'get',
+            data: data,
+            cache: false,
+            success: function () {
+
+                function popup() {
+                    popup = $('.popup');
+                    popup.css({"top": $(window).scrollTop() + 220}).addClass('active');
+                    var bg_popup = $('.bg_popup');
+                    bg_popup.fadeIn();
+                    bg_popup.click(function () {   // удаляем при нажати на на люьом месте кроме окна котрое появилось
+                        $('.popup').removeClass('active');
+                        bg_popup.fadeOut();
+                    });
+                }
+
+                popup();
+
+                console.log('OK - del - ajax');
+
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
+    });
+});
