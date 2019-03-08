@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -34,24 +33,35 @@ ALLOWED_HOSTS = [] # "zohan.pythonanywhere.com",
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth', # для регистрации и соцсетей
-    'django.contrib.sites', # для регистрации и соцсетей
+    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'bootstrap3',
-    'bootstrap4',
-
     'orders',
     'products',
+    'django.contrib.sites',
 
 
-    'allauth', # для регистрации и соцсетей
-    'allauth.account', # для регистрации
+    'allauth',
+    'allauth.account',
     'allauth.socialaccount',
+
+    'allauth.socialaccount.providers.vk',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
+    'allauth.socialaccount.providers.odnoklassniki',
+    'allauth.socialaccount.providers.instagram',
+
+
 ]
+
+# Нужно предоставить Django информацию о том, где находится сервер elasticsearch.
+ELASTICSEARCH_DSL= {
+    'default' : {
+        'hosts' : 'localhost:9200'
+    },
+}
 
 
 # для регистрации и соцсетей
@@ -60,16 +70,22 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-SITE_ID = 1
+# для регистрации и соцсетей
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'SCOPE': ['email'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'METHOD': 'oauth2',
+        'VERIFIED_EMAIL': False
+    }
+}
 
-
+SITE_ID = 3
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_URL = "/accounts/login/"
 
-EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
-
-
+SOCIALACCOUNT_QUERY_EMAIL = True
 
 
 
@@ -93,7 +109,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request', # для регистрации и соцсетей
+                'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'products.context_processor.user_profile',
@@ -167,6 +183,3 @@ STATIC_URL = '/static/' # статические файлы отдельных �
 MEDIA_ROOT = os.path.join(BASE_DIR, "media") # корень медиа, сначала ищет тут, потом в MEDIA_URL (ето media каждлго апликейшена)
 
 MEDIA_URL = '/media/' # тут images каждого апликейшена
-
-
-
