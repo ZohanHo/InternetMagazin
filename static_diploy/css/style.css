@@ -413,33 +413,33 @@ div {
 
 /* Всплывающее окно */
 
-.popup {
-    width: 650px;
-    height: 380px;
-    background: #D8D8D8;
-    z-index: 100;
-    padding: 23px 0 0 0;
-    position: absolute; top: 25%;
-    left: 0;
-    right: 0;
-    margin: auto;
-    display: none;
-    /*@include transform(translate(-1000px)); !* вылазит сбоку *!*/
-    /*@inclue transition(.4s)*/
-}
+    .popup {
+        width: 650px;
+        height: 380px;
+        background: #D8D8D8;
+        z-index: 100;
+        padding: 23px 0 0 0;
+        position: absolute; top: 25%;
+        left: 0;
+        right: 0;
+        margin: auto;
+        display: none;
+        /*@include transform(translate(-1000px)); !* вылазит сбоку *!*/
+        /*@inclue transition(.4s)*/
+    }
 
-.popup.active{
-      display: block;
-    /*@include transform(translate(0px));*/
-}
+    .popup.active{
+          display: block;
+        /*@include transform(translate(0px));*/
+    }
 
-.bg_popup {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 99;
-    background: rgba(0, 0, 0, .7);
-    display: none;
-}
+    .bg_popup {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 99;
+        background: rgba(0, 0, 0, .7);
+        display: none;
+    }

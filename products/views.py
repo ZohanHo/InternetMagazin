@@ -87,7 +87,7 @@ class ListViewLandingAuto(ListView):
         self.form.is_valid()
         #
         self.search = ProductImages(
-            request.POST or None)  # Создали переменную для работы с POST, используется когда fprm.modelform
+            request.POST or None)  # Создали переменную для работы с POST, используется когда form.modelform
         return super(ListViewLandingAuto, self).dispatch(request, *args,
                                                      **kwargs)  # после чего вызываем super, что бы функция работала стандартно
 
